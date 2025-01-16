@@ -31,3 +31,13 @@ create table clientes(
     );
 
     se
+
+   /* create table representante;
+id int primary key auto_increment,
+
+clientes(razao_social, cnpj, endereco, bairro, cep, cidade, estado, telefone, inscricao_estadual(nao obrigatorio)
+
+pedidos(Quantidade, tamanho, preco, condicao_de_pagamento, data_do_pedido, observacao)*/
+
+
+
