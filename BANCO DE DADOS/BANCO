@@ -3,9 +3,17 @@ use pacsoft;
 
 create table fornecedor(
 id int primary key auto_increment,
+
 clientes(razao_social, cnpj, endereco, bairro, cep, cidade, estado, telefone, inscricao_estadual(nao obrigatorio)
-representantes (cpf, cnpj(nao obrigatório), nome, rg (não obrigatorio), conta_bancaria, chave_pix(não obrigatorio), telefone, area_de_atuacao, login_senha)
+
+representantes (cpf, cnpj(nao obrigatório), nome, rg (não obrigatorio), conta_bancaria, 
+chave_pix(não obrigatorio), telefone, area_de_atuacao, login_senha)
+
 forma_pagamento (pix, a_vista , cheque, boleto)
+
 produtos (preço, nome_do_produto, tamanho)
-pedidos(status_da_produção, status_envio, situação_pagamento, conclusao_cancelamento, obs, comissao(no backend para padrão 3%))
+
+pedidos(status_da_produção, status_envio, situação_pagamento, conclusao_cancelamento, 
+obs, comissao(no backend para padrão 3%))
+
 );
