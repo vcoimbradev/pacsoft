@@ -1,10 +1,9 @@
+-- Active: 1737060139400@@127.0.0.1@3306@pacsoft
 create database pacsoft;
 use pacsoft;
 
-create table fornecedor(
+/* create table fornecedor(
 id int primary key auto_increment,
-
-clientes(razao_social, cnpj, endereco, bairro, cep, cidade, estado, telefone, inscricao_estadual(nao obrigatorio)
 
 representantes (cpf, cnpj(nao obrigatório), nome, rg (não obrigatorio), conta_bancaria, 
 chave_pix(não obrigatorio), telefone, area_de_atuacao, login_senha)
@@ -14,6 +13,21 @@ forma_pagamento (pix, a_vista , cheque, boleto)
 produtos (preço, nome_do_produto, tamanho)
 
 pedidos(status_da_produção, status_envio, situação_pagamento, conclusao_cancelamento, 
-obs, comissao(no backend para padrão 3%))
+obs, comissao(no backend para padrão 3%)) */
 
 );
+
+create table clientes(
+    id int primary key auto_increment,
+    razao_social varchar(255),
+    cnpj int (14), 
+    endereco varchar(255),
+    bairro varchar(30),
+    cep int(7),
+    cidade varchar(100),
+    estado varchar (30),
+    telefone INT(11),
+    inscricao_estadual int(12)
+    );
+
+    se
