@@ -1,4 +1,4 @@
--- Active: 1737061635065@@127.0.0.1@3306@pacsoft
+-- Active: 1737060139400@@127.0.0.1@3306@pacsoft
 create database if NOT exists pacsoft;
 use pacsoft;
 
@@ -55,19 +55,22 @@ create table if NOT exists clientes(
     obs VARCHAR(300),
     comissao INT(20) NOT NULL, -- (no backend para padrão 3%)
     forma_pagamento VARCHAR(100) NOT NULL,
-    Valor_total DECIMAL(10.2) NOT NULL,
+    Valor_total DECIMAL(10,2) NOT NULL,
     id_representante int NOT NULL,
     id_cliente int NOT NULL,
     constraint FK_PEDIDOS_REP Foreign Key (id_representante) REFERENCES representantes(id),
     constraint FK_PEDIDOS_CLI Foreign Key (id_cliente) REFERENCES clientes(id)
     );
 
-CREATE Table pedidosrep(
+CREATE Table pedidos_representantes(
     id int primary key auto_increment,
-    Quantidade_KG INT (10),
-    Quantidade_FD INT (10),
-    condicao_de_pagamento VARCHAR (20),
-    data_do_pedido DATE,
-    observacao_do_pedido VARCHAR (255)
+    Quantidade_KG INT (10) NOT NULL,
+    Quantidade_FD INT (10) NOT NULL,
+    condicao_de_pagamento VARCHAR (20) NOT NULL,
+    data_do_pedido DATE NOT NULL,
+    observacao_do_pedido VARCHAR (255) NOT NULL,
+    id_representante INT NOT NULL,
+    id_cliente int NOT NULL,
+    constraint FK_PEDIDOS_REPS FOREIGN KEY (id_representante) REFERENCES representantes(id),
+    constraint FK_PEDIDOS_CLIE Foreign Key (id_cliente) REFERENCES clientes(id)
 );
-
