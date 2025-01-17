@@ -5,38 +5,70 @@ use pacsoft;
 /* create table fornecedor(
 id int primary key auto_increment,
 
-representantes (cpf, cnpj(nao obrigatório), nome, rg (não obrigatorio), conta_bancaria, 
-chave_pix(não obrigatorio), telefone, area_de_atuacao, login_senha)
 
 forma_pagamento (pix, a_vista , cheque, boleto)
 
 produtos (preço, nome_do_produto, tamanho)
 
 pedidos(status_da_produção, status_envio, situação_pagamento, conclusao_cancelamento, 
-obs, comissao(no backend para padrão 3%)) */
+obs, comissao(no backend para padrão 3%), forma_pagamento) */
 
 );
 
 create table clientes(
     id int primary key auto_increment,
-    razao_social varchar(255),
-    cnpj int (14), 
-    endereco varchar(255),
-    bairro varchar(30),
-    cep int(7),
-    cidade varchar(100),
-    estado varchar (30),
-    telefone INT(11),
-    inscricao_estadual int(12)
+    razao_social varchar(255) NOT NULL,
+    cnpj int (14) UNIQUE NOT NULL, 
+    endereco varchar(255) NOT NULL,
+    bairro varchar(30) NOT NULL,
+    cep int(7) NOT NULL,
+    cidade varchar(100) NOT NULL,
+    estado varchar (30) NOT NULL,
+    telefone INT(11) NOT NULL,
+    inscricao_estadual int(12) NOT NULL
     );
 
-    se
+    select * from clientes;
 
-   /* create table representante;
-id int primary key auto_increment,
+    CREATE TABLE representantes (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    cpf int (11) UNIQUE NOT NULL, 
+    cnpj int (14) UNIQUE, --(nao obrigatório)
+    nome VARCHAR (255),
+    rg int(10) UNIQUE, --(não obrigatório)
+    chave_pix VARCHAR(50), --(não obrigatorio)
+    telefone INT(11) NOT NULL,
+    area_de_atuacao VARCHAR (255) NOT NULL
+    );
 
-clientes(razao_social, cnpj, endereco, bairro, cep, cidade, estado, telefone, inscricao_estadual(nao obrigatorio)
+    CREATE TABLE login_senha(
+    id int PRIMARY KEY AUTO_INCREMENT,
+    cpf int (11) UNIQUE NOT NULL,
+    senha VARCHAR (255)
+    );
+    
+    CREATE TABLE conta_bancaria(
+    id int PRIMARY KEY AUTO_INCREMENT,
+    banco VARCHAR(255) NOT NULL,
+    agencia int(5) NOT NULL,
+    conta int(50) NOT NULL
+    );
 
-pedidos(Quantidade, tamanho, preco, condicao_de_pagamento, data_do_pedido, observacao)*/
+    CREATE TABLE produtos(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome_do_produto VARCHAR(255)  NOT NULL,
+    preço DECIMAL(10,2) NOT NULL,
+    tamanho VARCHAR(50) NOT NULL
+    );
 
-
+    CREATE TABLE pedidos(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    status_da_produção VARCHAR(100),
+    status_envio VARCHAR(100),
+    situação_pagamento VARCHAR(100),
+    conclusao_cancelamento VARCHAR(100),
+    obs VARCHAR(300),
+    comissao INT(20), --(no backend para padrão 3%)
+    forma_pagamento VARCHAR(100)
+    Valor_total INT(10,2)
+    )
