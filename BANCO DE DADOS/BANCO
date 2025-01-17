@@ -1,4 +1,4 @@
--- Active: 1737060139400@@127.0.0.1@3306@pacsoft
+-- Active: 1737061635065@@127.0.0.1@3306@pacsoft
 create database if NOT exists pacsoft;
 use pacsoft;
 
@@ -61,4 +61,13 @@ create table if NOT exists clientes(
     constraint FK_PEDIDOS_REP Foreign Key (id_representante) REFERENCES representantes(id),
     constraint FK_PEDIDOS_CLI Foreign Key (id_cliente) REFERENCES clientes(id)
     );
+
+CREATE Table pedidosrep(
+    id int primary key auto_increment,
+    Quantidade_KG INT (10),
+    Quantidade_FD INT (10),
+    condicao_de_pagamento VARCHAR (20),
+    data_do_pedido DATE,
+    observacao_do_pedido VARCHAR (255)
+);
 
