@@ -13,7 +13,7 @@ class homepagestage extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("LOGIN", selectionColor: Colors.white),
-        backgroundColor: Colors.blue,
+        backgroundColor: Color(0x7FA653),
       ),
       body:Center(
         child: Container(
