@@ -57,7 +57,7 @@ flutter:
   # the material Icons class.
     assets:
     - assets/fonts/
-    - assets/images/logo.jpg
+    - assets/images/logo.png
     fonts:
     - family: Etno
       fonts:
