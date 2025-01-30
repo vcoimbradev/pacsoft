@@ -18,12 +18,14 @@ class homepagestage extends State<HomePage> {
           fontFamily: 'Etno',
           fontWeight: FontWeight.w300,
         ),
-        
         ),
         backgroundColor: Colors.green[200],
       ),
 
-      body:Center(
+      body:
+      Padding(
+        padding = EdgeInsets.only(top: 50),
+      child:  Center(
         child: Container(
         height: double.infinity,
         width: double.infinity,
@@ -63,8 +65,9 @@ class homepagestage extends State<HomePage> {
         SizedBox(height: 10,),
         botao()]
       ),
-      )
-      )
+      ),
+      ),
+      ),
     );
   }
 }
@@ -80,6 +83,5 @@ class botao extends StatelessWidget{
       }, 
       child: const Text("ENTRAR")
       );
-  }
-  
+  } 
 }
