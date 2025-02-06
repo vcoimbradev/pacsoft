@@ -19,25 +19,25 @@ class homepagestage extends State<HomePage> {
           fontWeight: FontWeight.w300,
         ),
         ),
-        backgroundColor: Colors.green[200],
+        backgroundColor: const Color.fromARGB(255, 165, 214, 167),
       ),
 
-      body:
-      Padding(
-        padding = EdgeInsets.only(top: 50),
-      child:  Center(
-        child: Container(
+      body: Container(
         height: double.infinity,
         width: double.infinity,
         color: const Color.fromARGB(255, 250, 239, 233),
+        child: Align(
+          alignment: Alignment(0, -1),
         child: Column(
-        
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start, 
         children:[
         Image.asset('assets/images/logo.png', height: 250, width: 200),
-        Text('CPF OU CNPJ', style: TextStyle(fontSize: 18),),
+        Text('CPF E CNPJ', style: TextStyle(fontSize: 18,
+          fontFamily: 'Lato',
+          fontWeight: FontWeight.w500,),
+        ),
         SizedBox(
-          width: 350,
+          width: 300,
           child:TextField(
           textAlign: TextAlign.center,
           decoration: InputDecoration(
@@ -49,9 +49,12 @@ class homepagestage extends State<HomePage> {
         ),
         ),
         SizedBox(height: 10,),
-        Text('SENHA', style: TextStyle(fontSize: 18),),
+        Text('SENHA', style: TextStyle(fontSize: 18,
+          fontFamily: 'Lato',
+          fontWeight: FontWeight.w500,),
+        ),
         SizedBox(
-          width: 350,
+          width: 300,
           child:TextField(
           textAlign: TextAlign.center,
           decoration: InputDecoration(
@@ -67,7 +70,6 @@ class homepagestage extends State<HomePage> {
       ),
       ),
       ),
-      ),
     );
   }
 }
@@ -75,13 +77,20 @@ class homepagestage extends State<HomePage> {
 class botao extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    final ButtonStyle style =
-        ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
     return ElevatedButton(
       onPressed:(){
         print("pressionado");
       }, 
-      child: const Text("ENTRAR")
+      style: ElevatedButton.styleFrom(
+          textStyle: TextStyle(fontSize: 20),
+          backgroundColor: Color.fromARGB(255, 165, 214, 167),
+          foregroundColor: Color.fromARGB(255, 0, 0, 0)
+      ),
+      child: Text("ENTRAR",
+       style: TextStyle(
+          fontFamily: 'Lato',
+          fontWeight: FontWeight.w500,
+        ),)
       );
   } 
 }

@@ -62,6 +62,7 @@ flutter:
     - family: Etno
       fonts:
         - asset: assets/fonts/Etno-Regular.ttf
+        - asset: assets/fonts/Lato-Regular.ttf
 
     uses-material-design: true
 
