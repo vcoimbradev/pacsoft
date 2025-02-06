@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
+class Login extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return homepagestage();
+    return login();
   }
 }
 
-class homepagestage extends State<HomePage> {
+class login extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
