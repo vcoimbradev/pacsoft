@@ -58,6 +58,10 @@ flutter:
     assets:
     - assets/fonts/
     - assets/images/logo.png
+    - assets/images/cliente.png
+    - assets/images/relatorio.png
+    - assets/images/inicio.png
+    - assets/images/pedidos.png
     fonts:
     - family: Etno
       fonts:
