@@ -62,6 +62,10 @@ flutter:
     - assets/images/relatorio.png
     - assets/images/inicio.png
     - assets/images/pedidos.png
+    - assets/images/comissao.png
+    - assets/images/pendente.png
+    - assets/images/preco.png
+    - assets/images/tempo.png
     fonts:
     - family: Etno
       fonts:
