@@ -1,11 +1,11 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
 
-class barra extends StatefulWidget implements PreferredSizeWidget{
+class barra_superior extends StatefulWidget implements PreferredSizeWidget{
 
   final double height;
 
-  const barra({super.key, required this.height});
+  const barra_superior({super.key, required this.height});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class barra extends StatefulWidget implements PreferredSizeWidget{
  
 }
 
-class Barra extends State<barra>{
+class Barra extends State<barra_superior>{
   @override
   Widget build(BuildContext context) {
     return AppBar(

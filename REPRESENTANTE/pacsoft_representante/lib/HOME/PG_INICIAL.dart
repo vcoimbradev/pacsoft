@@ -16,7 +16,7 @@ class pginicialstage extends State<PgInicial>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: barra(height: 100),
+      appBar: barra_superior(height: 100),
 
       body: Container( //MENU DE ATALHO E PESQUISA
 
@@ -150,7 +150,7 @@ class pginicialstage extends State<PgInicial>{
       ),
       ),
       
-      bottomNavigationBar: Navigation()
+      bottomNavigationBar: barra_inferior()
     );
   }
 
