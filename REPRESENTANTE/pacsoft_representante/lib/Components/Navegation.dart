@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Navigation extends StatefulWidget implements PreferredSizeWidget{
+class barra_inferior extends StatefulWidget implements PreferredSizeWidget{
   @override
   State<StatefulWidget> createState() {
     return baixo();
@@ -13,7 +13,7 @@ class Navigation extends StatefulWidget implements PreferredSizeWidget{
   
 }
 
-class baixo extends State<Navigation>{
+class baixo extends State<barra_inferior>{
   @override
   Widget build(BuildContext context) {
     return NavigationBar( //BARRA DE ESCOLHA
