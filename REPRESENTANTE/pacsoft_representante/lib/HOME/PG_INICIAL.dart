@@ -150,7 +150,7 @@ class pginicialstage extends State<PgInicial>{
       ),
       ),
       
-      bottomNavigationBar: barra_inferior()
+      bottomNavigationBar: barra_inferior(),
     );
   }
 
