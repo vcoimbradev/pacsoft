@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pacsoft_representante/HOME/PG_INICIAL.dart';
 
 class barra_inferior extends StatefulWidget implements PreferredSizeWidget{
   @override
@@ -14,6 +15,13 @@ class barra_inferior extends StatefulWidget implements PreferredSizeWidget{
 }
 
 class baixo extends State<barra_inferior>{
+
+  int index_selecionado = 0;
+
+  final List<Widget> screens = [
+    PgInicial(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return NavigationBar( //BARRA DE ESCOLHA

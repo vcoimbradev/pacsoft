@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pacsoft_representante/Components/Appbar.dart';
-import 'package:pacsoft_representante/Components/Navegation.dart';
+import 'package:pacsoft_representante/Components/Barra_pesquisa.dart';
+import 'package:pacsoft_representante/Components/Barra_superior.dart';
+import 'package:pacsoft_representante/Components/Barra_inferior.dart';
 
 class PgInicial  extends StatefulWidget{
   @override
@@ -18,41 +19,24 @@ class pginicialstage extends State<PgInicial>{
     return Scaffold(
       appBar: barra_superior(height: 100),
 
-      body: Container( //MENU DE ATALHO E PESQUISA
+      body:
+      
+      Column(
+        children: [
+        Barra_pesquisa(),
 
-               
+      Flexible(
+      child: SingleChildScrollView( //MENU DE ATALHO E PESQUISA
+        
         child: Column(
 
           children: [
 
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 16,vertical: 10),
-              child: Container(
-                height: 45,
-                decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(25),
-                ),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintStyle: TextStyle(color: Colors.grey),
-                    hintText: "Pesquise pela razão social ou CNPJ",
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                    suffixIcon: Padding(
-                      padding: EdgeInsets.only(right: 10),
-                      child: Icon(Icons.search),
-                    
-                    )
-                  ),
-                ),
-              ),
-            ),
-            
-              SizedBox(height: 10,),
+            SizedBox(height: 10,),
+
             Text("Bem Vindo, !", style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w300, fontSize: 20),),
 
-              SizedBox(height: 10,),
+            SizedBox(height: 10,),
 
               Column(
                 children: [
@@ -104,7 +88,7 @@ class pginicialstage extends State<PgInicial>{
             
             
 
-            Expanded( //LINHA DEBAIXO
+            Container( //LINHA DEBAIXO
               child: Column(
               children: [
 
@@ -149,7 +133,10 @@ class pginicialstage extends State<PgInicial>{
           ],
       ),
       ),
-      
+      ),
+      ],
+      ),
+
       bottomNavigationBar: barra_inferior(),
     );
   }

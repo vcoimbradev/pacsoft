@@ -82,7 +82,7 @@ class botao extends StatelessWidget{
         print("pressionado");
       }, 
       style: ElevatedButton.styleFrom(
-          textStyle: TextStyle(fontSize: 20),
+          textStyle: TextStyle(fontSize: 18),
           backgroundColor: Color.fromARGB(255, 165, 214, 167),
           foregroundColor: Color.fromARGB(255, 0, 0, 0)
       ),

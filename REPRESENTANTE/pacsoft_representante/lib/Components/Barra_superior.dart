@@ -1,5 +1,7 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:pacsoft_representante/HOME/PG_PERFIL.dart';
 
 class barra_superior extends StatefulWidget implements PreferredSizeWidget{
 
@@ -32,6 +34,7 @@ class Barra extends State<barra_superior>{
   @override
   Widget build(BuildContext context) {
     return AppBar(
+        automaticallyImplyLeading: false,
         titleSpacing: 30,
         toolbarHeight: 100,
         title: Image.asset('assets/images/logo.png', height: 50),
@@ -39,14 +42,16 @@ class Barra extends State<barra_superior>{
           Padding(padding: EdgeInsets.only(right: 30),
           child:  SizedBox(
             child: IconButton(onPressed:(){
-
+              Navigator.push(
+                context, 
+                MaterialPageRoute(builder: (context) => Pg_Perfil(), fullscreenDialog: false)
+              );
             }, icon: Icon(Icons.account_circle_outlined,size: 40,)),
           )
         )
         ],
-        backgroundColor: Colors.green[200],
+        backgroundColor: Color(0xFFA5D6A7),
       );
-
   }
   
 }
