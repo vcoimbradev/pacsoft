@@ -92,17 +92,76 @@ class pginicialstate extends State<PgPedidos> {
                       ],
                     ),
                     SizedBox(
+                      height: 20,
+                    ),
+                    Container(
                       width: 300,
                       height: 40,
+                      decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(100)),
                       child: TextField(
                         enabled: false,
                         textAlign: TextAlign.center,
                         decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(vertical: 10),
+                          hintText: 'Prazo de pagamento',
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(100)),
                         ),
                       ),
                     ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Selecione o tipo:',
+                      style: TextStyle(
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.w800,
+                          fontSize: 15),
+                    ),
+                    Container(
+                        width: 300,
+                        height: 40,
+                        child: DropdownButtonFormField<String>(
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 10),
+                            hintText: 'Selecione o tipo de pedido',
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(100)),
+                          ),
+                          items: [
+                            DropdownMenuItem(
+                              value: 'Bobina Picotada Fosca',
+                              child: Text('Bobina Picotada Fosca'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Bobina Picotada Fosca Especial',
+                              child: Text('Bobina Picotada Fosca Especial'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Bobina Picotada Transparente',
+                              child: Text('Bobina Picotada Transparente'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Sacola de KG Branca',
+                              child: Text('Sacola de KG Branca'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Sacola de KG Transparente',
+                              child: Text('Sacola de KG Transparente'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Sacola de Milhero Verde',
+                              child: Text('Sacola de Milhero Verde'),
+                            ),
+                          ],
+                          onChanged: (value) {
+                            // Ação ao selecionar um cliente
+                          },
+                        ))
                   ],
                 )
               ],
