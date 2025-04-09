@@ -130,6 +130,8 @@ class pginicialstate extends State<PgPedidos> {
                     SizedBox(
                       height: 20,
                     ),
+
+                    //* Campo de seleção do tipo de pedido *//
                     Text(
                       'Selecione o tipo:',
                       style: TextStyle(
@@ -181,138 +183,109 @@ class pginicialstate extends State<PgPedidos> {
                             });
                           },
                         )),
-                    if (mostrartamanho) ...[
+
+                                            if (mostrartamanho) ...[
                       SizedBox(
                         height: 20,
                       ),
-                      Container(
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Tamanho:',
-                                    style: TextStyle(
-                                        fontFamily: 'Lato',
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 15),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    'Qnt em KG:',
-                                    style: TextStyle(
-                                        fontFamily: 'Lato',
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 15),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                ],
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Column(
+                            children: [
+                              Text(
+                                'Tamanho:',
+                                style: TextStyle(
+                                    fontFamily: 'Lato',
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 15),
                               ),
-                            ),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  TamanhosPacote(),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Container(
-                                    width: 150,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey[300],
+                              TamanhosPacote(),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              Text(
+                                'Quantidade em KG::',
+                                style: TextStyle(
+                                    fontFamily: 'Lato',
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 15),
+                              ),
+                              Container(
+                                width: 150,
+                                height: 40,
+                                child: TextField(
+                                  textAlign: TextAlign.center,
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 10),
+                                    hintText: 'Digite aqui',
+                                    border: OutlineInputBorder(
                                         borderRadius:
                                             BorderRadius.circular(100)),
-                                    child: TextField(
-                                      textAlign: TextAlign.center,
-                                      decoration: InputDecoration(
-                                        contentPadding:
-                                            EdgeInsets.symmetric(vertical: 10),
-                                        hintText: 'Digite aqui',
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(100)),
-                                      ),
-                                    ),
-                                  )
-                                ]),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Qnt em FD:',
-                                    style: TextStyle(
-                                        fontFamily: 'Lato',
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 15),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    'Preço em KG:',
-                                    style: TextStyle(
-                                        fontFamily: 'Lato',
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 15),
-                                  ),
-                                ]),
-                                
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: 150,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey[300],
-                                      borderRadius: BorderRadius.circular(100)),
-                                  child: TextField(
-                                    textAlign: TextAlign.center,
-                                    decoration: InputDecoration(
-                                      contentPadding:
-                                          EdgeInsets.symmetric(vertical: 10),
-                                      hintText: 'Digite aqui',
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(100)),
-                                    ),
                                   ),
                                 ),
-
-                                Container(
-                                  width: 150,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey[300],
-                                      borderRadius: BorderRadius.circular(100)),
-                                  child: TextField(
-                                    textAlign: TextAlign.center,
-                                    decoration: InputDecoration(
-                                      contentPadding:
-                                          EdgeInsets.symmetric(vertical: 10),
-                                      hintText: 'Digite aqui',
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(100)),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Column(
+                            children: [
+                              Text(
+                                'Quantidade em Fardo:',
+                                style: TextStyle(
+                                    fontFamily: 'Lato',
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 15),
+                              ),
+                              Container(
+                                width: 150,
+                                height: 40,
+                                child: TextField(
+                                  textAlign: TextAlign.center,
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 10),
+                                    hintText: 'Digite aqui',
+                                    border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(100)),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Column(children: [
+                            Text(
+                              'Preço em KG:',
+                              style: TextStyle(
+                                  fontFamily: 'Lato',
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 15),
+                            ),
+                            Container(
+                              width: 150,
+                              height: 40,
+                              child: TextField(
+                                textAlign: TextAlign.center,
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 10),
+                                  hintText: 'Digite aqui',
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(100)),
+                                ),
+                              ),
+                            ),
+                          ]),  
+                        ],
+                      )
+                      
                     ]
                   ],
                 )
