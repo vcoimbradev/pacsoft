@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:pacsoft_representante/Components/Barra_inferior.dart';
 import 'package:pacsoft_representante/Components/Barra_pesquisa.dart';
 import 'package:pacsoft_representante/Components/Barra_superior.dart';
+import 'package:pacsoft_representante/Components/Tamanhos_pacote.dart';
 
 class PgPedidos extends StatefulWidget {
+  String? get tamanhoselecionado => null;
+
+  set tamanhoselecionadoValue(String? tamanhoselecionadoValue) {}
+
   @override
   State<StatefulWidget> createState() {
     return pginicialstate();
@@ -12,6 +17,17 @@ class PgPedidos extends StatefulWidget {
 
 class pginicialstate extends State<PgPedidos> {
   String? pagamentoselecionado;
+  String? produtoselecionado;
+  String? tamanhoselecionado;
+
+  String? get tamanhoselecionadovalue => tamanhoselecionado;
+  set tamanhoselecionadovalue(String? value) {
+    tamanhoselecionado = value;
+  }
+
+  bool get mostrartamanho =>
+      produtoselecionado == 'Bobina Picotada Fosca Especial' ||
+      produtoselecionado == 'Bobina Picotada Transparente';
 
   @override
   Widget build(BuildContext context) {
@@ -159,9 +175,145 @@ class pginicialstate extends State<PgPedidos> {
                             ),
                           ],
                           onChanged: (value) {
-                            // Ação ao selecionar um cliente
+                            setState(() {
+                              produtoselecionado = value;
+                              tamanhoselecionado = value;
+                            });
                           },
-                        ))
+                        )),
+                    if (mostrartamanho) ...[
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 10),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Tamanho:',
+                                    style: TextStyle(
+                                        fontFamily: 'Lato',
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 15),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    'Qnt em KG:',
+                                    style: TextStyle(
+                                        fontFamily: 'Lato',
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 15),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  TamanhosPacote(),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Container(
+                                    width: 150,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey[300],
+                                        borderRadius:
+                                            BorderRadius.circular(100)),
+                                    child: TextField(
+                                      textAlign: TextAlign.center,
+                                      decoration: InputDecoration(
+                                        contentPadding:
+                                            EdgeInsets.symmetric(vertical: 10),
+                                        hintText: 'Digite aqui',
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(100)),
+                                      ),
+                                    ),
+                                  )
+                                ]),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Qnt em FD:',
+                                    style: TextStyle(
+                                        fontFamily: 'Lato',
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 15),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    'Preço em KG:',
+                                    style: TextStyle(
+                                        fontFamily: 'Lato',
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 15),
+                                  ),
+                                ]),
+                                
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 150,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[300],
+                                      borderRadius: BorderRadius.circular(100)),
+                                  child: TextField(
+                                    textAlign: TextAlign.center,
+                                    decoration: InputDecoration(
+                                      contentPadding:
+                                          EdgeInsets.symmetric(vertical: 10),
+                                      hintText: 'Digite aqui',
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(100)),
+                                    ),
+                                  ),
+                                ),
+
+                                Container(
+                                  width: 150,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[300],
+                                      borderRadius: BorderRadius.circular(100)),
+                                  child: TextField(
+                                    textAlign: TextAlign.center,
+                                    decoration: InputDecoration(
+                                      contentPadding:
+                                          EdgeInsets.symmetric(vertical: 10),
+                                      hintText: 'Digite aqui',
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(100)),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ]
                   ],
                 )
               ],
