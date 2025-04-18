@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:pacsoft_representante/Components/Barra_inferior.dart';
 import 'package:pacsoft_representante/Components/Barra_pesquisa.dart';
 import 'package:pacsoft_representante/Components/Barra_superior.dart';
-import 'package:pacsoft_representante/Components/Tamanhos_pacote.dart';
+import 'package:pacsoft_representante/Components/Observacoes.dart';
+import 'package:pacsoft_representante/Components/Peso_medio.dart';
+import 'package:pacsoft_representante/Components/Preco.dart';
+import 'package:pacsoft_representante/Components/Quantidade_KG.dart';
+import 'package:pacsoft_representante/Components/Quantidade_fardo.dart';
+import 'package:pacsoft_representante/Components/Tamanho_Pacote.dart';
+import 'package:pacsoft_representante/Components/valor_medio.dart';
 
 class PgPedidos extends StatefulWidget {
   String? get tamanhoselecionado => null;
@@ -26,8 +32,12 @@ class pginicialstate extends State<PgPedidos> {
   }
 
   bool get mostrartamanho =>
+      produtoselecionado == 'Bobina Picotada Fosca' ||
       produtoselecionado == 'Bobina Picotada Fosca Especial' ||
-      produtoselecionado == 'Bobina Picotada Transparente';
+      produtoselecionado == 'Bobina Picotada Transparente' ||
+      produtoselecionado == 'Sacola de KG Branca' ||
+      produtoselecionado == 'Sacola de KG Transparente' ||
+      produtoselecionado == 'Sacola de Milhero Verde';
 
   @override
   Widget build(BuildContext context) {
@@ -38,263 +48,272 @@ class pginicialstate extends State<PgPedidos> {
           Barra_pesquisa(),
           Flexible(
               child: SingleChildScrollView(
-            child: Column(
+                  child: Column(children: [
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              'Novo Pedido',
+              style: TextStyle(
+                  fontFamily: 'Lato',
+                  fontWeight: FontWeight.w800,
+                  fontSize: 20),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Novo Pedido',
-                  style: TextStyle(
-                      fontFamily: 'Lato',
-                      fontWeight: FontWeight.w800,
-                      fontSize: 20),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                Text('Forma de Pagamento'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Forma de Pagamento'),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Radio<String>(
-                            value: "avista",
-                            groupValue: pagamentoselecionado,
-                            onChanged: (value) {
-                              pagamentoselecionado = value;
-                            }),
-                        Text(
-                          'À vista',
-                          style: TextStyle(
-                              fontFamily: 'Lato',
-                              fontWeight: FontWeight.w800,
-                              fontSize: 15),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Radio<String>(
-                            value: 'boleto',
-                            groupValue: pagamentoselecionado,
-                            onChanged: (value) {
-                              pagamentoselecionado = value;
-                            }),
-                        Text(
-                          'Boleto',
-                          style: TextStyle(
-                              fontFamily: 'Lato',
-                              fontWeight: FontWeight.w800,
-                              fontSize: 15),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Radio<String>(
-                            value: 'cheque',
-                            groupValue: pagamentoselecionado,
-                            onChanged: (value) {
-                              pagamentoselecionado = value;
-                            }),
-                        Text(
-                          'Cheque',
-                          style: TextStyle(
-                              fontFamily: 'Lato',
-                              fontWeight: FontWeight.w800,
-                              fontSize: 15),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      width: 300,
-                      height: 40,
-                      decoration: BoxDecoration(
-                          color: Colors.grey[300],
-                          borderRadius: BorderRadius.circular(100)),
-                      child: TextField(
-                        enabled: false,
-                        textAlign: TextAlign.center,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(vertical: 10),
-                          hintText: 'Prazo de pagamento',
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(100)),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-
-                    //* Campo de seleção do tipo de pedido *//
+                    Radio<String>(
+                        value: "avista",
+                        groupValue: pagamentoselecionado,
+                        onChanged: (value) {
+                          pagamentoselecionado = value;
+                        }),
                     Text(
-                      'Selecione o tipo:',
+                      'À vista',
                       style: TextStyle(
                           fontFamily: 'Lato',
                           fontWeight: FontWeight.w800,
                           fontSize: 15),
                     ),
-                    Container(
-                        width: 300,
-                        height: 40,
-                        child: DropdownButtonFormField<String>(
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 10),
-                            hintText: 'Selecione o tipo de pedido',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(100)),
-                          ),
-                          items: [
-                            DropdownMenuItem(
-                              value: 'Bobina Picotada Fosca',
-                              child: Text('Bobina Picotada Fosca'),
-                            ),
-                            DropdownMenuItem(
-                              value: 'Bobina Picotada Fosca Especial',
-                              child: Text('Bobina Picotada Fosca Especial'),
-                            ),
-                            DropdownMenuItem(
-                              value: 'Bobina Picotada Transparente',
-                              child: Text('Bobina Picotada Transparente'),
-                            ),
-                            DropdownMenuItem(
-                              value: 'Sacola de KG Branca',
-                              child: Text('Sacola de KG Branca'),
-                            ),
-                            DropdownMenuItem(
-                              value: 'Sacola de KG Transparente',
-                              child: Text('Sacola de KG Transparente'),
-                            ),
-                            DropdownMenuItem(
-                              value: 'Sacola de Milhero Verde',
-                              child: Text('Sacola de Milhero Verde'),
-                            ),
-                          ],
-                          onChanged: (value) {
-                            setState(() {
-                              produtoselecionado = value;
-                              tamanhoselecionado = value;
-                            });
-                          },
-                        )),
-
-                                            if (mostrartamanho) ...[
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            children: [
-                              Text(
-                                'Tamanho:',
-                                style: TextStyle(
-                                    fontFamily: 'Lato',
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 15),
-                              ),
-                              TamanhosPacote(),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Text(
-                                'Quantidade em KG::',
-                                style: TextStyle(
-                                    fontFamily: 'Lato',
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 15),
-                              ),
-                              Container(
-                                width: 150,
-                                height: 40,
-                                child: TextField(
-                                  textAlign: TextAlign.center,
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 10, horizontal: 10),
-                                    hintText: 'Digite aqui',
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(100)),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            children: [
-                              Text(
-                                'Quantidade em Fardo:',
-                                style: TextStyle(
-                                    fontFamily: 'Lato',
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 15),
-                              ),
-                              Container(
-                                width: 150,
-                                height: 40,
-                                child: TextField(
-                                  textAlign: TextAlign.center,
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 10, horizontal: 10),
-                                    hintText: 'Digite aqui',
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(100)),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Column(children: [
-                            Text(
-                              'Preço em KG:',
-                              style: TextStyle(
-                                  fontFamily: 'Lato',
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: 15),
-                            ),
-                            Container(
-                              width: 150,
-                              height: 40,
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 10),
-                                  hintText: 'Digite aqui',
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(100)),
-                                ),
-                              ),
-                            ),
-                          ]),  
-                        ],
-                      )
-                      
-                    ]
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Radio<String>(
+                        value: 'boleto',
+                        groupValue: pagamentoselecionado,
+                        onChanged: (value) {
+                          pagamentoselecionado = value;
+                        }),
+                    Text(
+                      'Boleto',
+                      style: TextStyle(
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.w800,
+                          fontSize: 15),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Radio<String>(
+                        value: 'cheque',
+                        groupValue: pagamentoselecionado,
+                        onChanged: (value) {
+                          pagamentoselecionado = value;
+                        }),
+                    Text(
+                      'Cheque',
+                      style: TextStyle(
+                          fontFamily: 'Lato',
+                          fontWeight: FontWeight.w800,
+                          fontSize: 15),
+                    ),
                   ],
-                )
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  width: 300,
+                  height: 40,
+                  decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(100)),
+                  child: TextField(
+                    enabled: false,
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(vertical: 10),
+                      hintText: 'Prazo de pagamento',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(100)),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+
+                //* TODO: Campo de seleção do tipo de pedido *//
+                Text(
+                  'Selecione o tipo:',
+                  style: TextStyle(
+                      fontFamily: 'Lato',
+                      fontWeight: FontWeight.w800,
+                      fontSize: 15),
+                ),
+                Container(
+                    width: 320,
+                    height: 50,
+                    child: DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                        hintText: 'Selecione o tipo de pedido',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(100)),
+                      ),
+                      items: [
+                        DropdownMenuItem(
+                          child: SizedBox.shrink(),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Bobina Picotada Fosca',
+                          child: Text('Bobina Picotada Fosca'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Bobina Picotada Fosca Especial',
+                          child: Text('Bobina Picotada Fosca Especial'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Bobina Picotada Transparente',
+                          child: Text('Bobina Picotada Transparente'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Sacola de KG Branca',
+                          child: Text('Sacola de KG Branca'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Sacola de KG Transparente',
+                          child: Text('Sacola de KG Transparente'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Sacola de Milhero Verde',
+                          child: Text('Sacola de Milhero Verde'),
+                        ),
+                      ],
+                      onChanged: (value) {
+                        setState(() {
+                          produtoselecionado = value;
+                          tamanhoselecionado = value;
+                        });
+                      },
+                    )),
+
+                if (mostrartamanho) ...[ //* TODO: Campo de seleção do tipo de pedido e botão de adicionar, guardar e cancelar *//
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      TamanhoPacote(
+                        produtoSelecionado: produtoselecionado,
+                      ),
+                      QuantidadeKg(),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      QuantidadeFardo(),
+                      Preco(),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Observacoes(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Pesomedio(),
+                  Valormedio(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(
+                          children: [
+                            Image.asset('assets/images/confirmar.png',
+                                width: 5),
+                            botao_confirmar(),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Image.asset('assets/images/guardar.png', width: 5),
+                            botao_guardar(),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Image.asset('assets/images/cancelar.png', width: 5),
+                            botao_cancelar(),
+                          ],
+                        ),
+                      ]),
+                ]
               ],
             ),
-          ))
+          ])))
         ],
       ),
       bottomNavigationBar: barra_inferior(),
     );
+  }
+}
+
+class botao_confirmar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        onPressed: () {},
+        style: ElevatedButton.styleFrom(
+            textStyle: TextStyle(fontSize: 10),
+            foregroundColor: Color.fromARGB(255, 0, 0, 0)),
+        child: Text(
+          "Confirmar Pedido",
+          style: TextStyle(
+            fontFamily: 'Lato',
+            fontWeight: FontWeight.w500,
+          ),
+        ));
+  }
+}
+
+class botao_guardar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        onPressed: () {},
+        style: ElevatedButton.styleFrom(
+            textStyle: TextStyle(fontSize: 10),
+            backgroundColor: Color.fromARGB(255, 165, 214, 167),
+            foregroundColor: Color.fromARGB(255, 0, 0, 0)),
+        child: Text(
+          "Guardar Pedido",
+          style: TextStyle(
+            fontFamily: 'Lato',
+            fontWeight: FontWeight.w500,
+          ),
+        ));
+  }
+}
+
+class botao_cancelar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        onPressed: () {},
+        style: ElevatedButton.styleFrom(
+            textStyle: TextStyle(fontSize: 10),
+            backgroundColor: Color.fromARGB(255, 165, 214, 167),
+            foregroundColor: Color.fromARGB(255, 0, 0, 0)),
+        child: Text(
+          "Cancelar Pedido",
+          style: TextStyle(
+            fontFamily: 'Lato',
+            fontWeight: FontWeight.w500,
+          ),
+        ));
   }
 }
