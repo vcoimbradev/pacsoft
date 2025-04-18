@@ -14,6 +14,16 @@ const TamanhoPacote({super.key, required this.produtoSelecionado});
 
 class tamanhosstate extends State<TamanhoPacote> {
   String? tamanhoselecionado;
+
+  void didUpdateWidget(covariant TamanhoPacote oldWidget){
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.produtoSelecionado != widget.produtoSelecionado) {
+      setState(() {
+        tamanhoselecionado = null; // Reseta o tamanho selecionado ao mudar o produto
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     TamanhosPacoteCompleto();
