@@ -4,7 +4,7 @@ class TamanhoPacote extends StatefulWidget {
 
 final String? produtoSelecionado; // Recebe o produto selecionado
 
-TamanhoPacote({required this.produtoSelecionado});
+const TamanhoPacote({super.key, required this.produtoSelecionado});
 
   @override
   State<StatefulWidget> createState() {

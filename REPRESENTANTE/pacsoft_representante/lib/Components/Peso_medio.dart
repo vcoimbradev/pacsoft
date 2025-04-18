@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Pesomedio extends StatefulWidget {
+  const Pesomedio({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return pesomediostate();

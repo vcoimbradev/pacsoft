@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class QuantidadeFardo extends StatefulWidget {
+  const QuantidadeFardo({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return quantidadestage();
@@ -17,7 +19,7 @@ class quantidadestage extends State<QuantidadeFardo> {
           style: TextStyle(
               fontFamily: 'Lato', fontWeight: FontWeight.w800, fontSize: 15),
         ),
-        Container(
+        SizedBox(
           width: 150,
           height: 40,
           child: TextField(

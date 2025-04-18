@@ -4,6 +4,8 @@ import 'package:pacsoft_representante/Components/Barra_superior.dart';
 import 'package:pacsoft_representante/Components/Barra_inferior.dart';
 
 class PgInicial  extends StatefulWidget{
+  const PgInicial({super.key});
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState

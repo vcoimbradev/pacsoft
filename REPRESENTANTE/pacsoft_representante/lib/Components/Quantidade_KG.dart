@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pacsoft_representante/HOME/PG_PEDIDOS.dart';
 
 class QuantidadeKg extends StatefulWidget {
+  const QuantidadeKg({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return quantidadekgstate();
@@ -19,7 +21,7 @@ class quantidadekgstate extends State<QuantidadeKg> {
           style: TextStyle(
               fontFamily: 'Lato', fontWeight: FontWeight.w800, fontSize: 15),
         ),
-        Container(
+        SizedBox(
           width: 150,
           height: 40,
           child: TextField(

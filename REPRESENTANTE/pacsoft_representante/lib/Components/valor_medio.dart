@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Valormedio extends StatefulWidget {
+  const Valormedio({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return valormediostate();

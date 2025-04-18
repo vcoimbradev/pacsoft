@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Barra_pesquisa extends StatefulWidget implements PreferredSizeWidget{
+  const Barra_pesquisa({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return barra();

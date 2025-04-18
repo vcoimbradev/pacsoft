@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Observacoes extends StatefulWidget {
+  const Observacoes({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return observacoesstate();
@@ -17,7 +19,7 @@ class observacoesstate extends State<Observacoes> {
           style: TextStyle(
               fontFamily: 'Lato', fontWeight: FontWeight.w800, fontSize: 15),
         ),
-        Container(
+        SizedBox(
           width: 300,
           height: 40,
           child: TextField(

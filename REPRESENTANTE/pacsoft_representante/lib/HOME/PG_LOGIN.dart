@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
+  const Login({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return login();
@@ -75,6 +77,8 @@ class login extends State<Login> {
 }
 
 class botao extends StatelessWidget{
+  const botao({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(

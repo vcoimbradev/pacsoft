@@ -4,6 +4,8 @@ import 'package:pacsoft_representante/Components/Barra_pesquisa.dart';
 import 'package:pacsoft_representante/Components/Barra_superior.dart';
 
 class Pg_Perfil extends StatefulWidget{
+  const Pg_Perfil({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return perfil();

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Preco extends StatefulWidget {
+  const Preco({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return precostate();
@@ -16,7 +18,7 @@ class precostate extends State<Preco> {
         style: TextStyle(
             fontFamily: 'Lato', fontWeight: FontWeight.w800, fontSize: 15),
       ),
-      Container(
+      SizedBox(
         width: 150,
         height: 40,
         child: TextField(
