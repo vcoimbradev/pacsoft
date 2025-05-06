@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pacsoft_representante/HOME/PG_LOGIN.dart';
-import 'package:pacsoft_representante/HOME/PG_INICIAL.dart';
-import 'package:pacsoft_representante/HOME/PG_PEDIDOS.dart';
-import 'package:pacsoft_representante/HOME/PG_PERFIL.dart';
+import 'package:pacsoft_representante/HOME/RELATORIO/PG_TODOSOSCLIENTES.dart';
+
+
 
 class Pacsoft extends StatelessWidget {
   const Pacsoft({super.key});
@@ -10,8 +9,7 @@ class Pacsoft extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: PgPedidos(),
-      
+      home:  PgTodosClientes(),
     );
   }
 }
