@@ -177,6 +177,8 @@ class pginicialstage extends State<PgInicial> {
                     ],
                   ),
 
+                  SizedBox(height: 30),
+
                   Container(
                     child: Column(
                       children: [

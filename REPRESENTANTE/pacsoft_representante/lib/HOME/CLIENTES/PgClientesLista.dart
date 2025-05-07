@@ -5,7 +5,6 @@ import 'package:pacsoft_representante/Components/BARRAS%20DE%20PESQUISAS%20E%20D
 import 'package:pacsoft_representante/HOME/CLIENTES/PG_CADASTROCLIENTE.dart';
 import 'package:pacsoft_representante/HOME/CLIENTES/PG_CLIENTESINATIVOS30DIAS.dart';
 import 'package:pacsoft_representante/HOME/PEDIDOS/PG_TODOSOSCLIENTES.dart';
-import 'package:pacsoft_representante/HOME/RELATORIO/PG_CLIENTESINATIVOS.dart';
 
 class PgClientesLista extends StatelessWidget {
   const PgClientesLista({super.key});
