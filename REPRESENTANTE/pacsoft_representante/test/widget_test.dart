@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:pacsoft_representante/Components/Inicializador.dart';
+import 'package:pacsoft_representante/Inicializador.dart';
 
 
 void main() {

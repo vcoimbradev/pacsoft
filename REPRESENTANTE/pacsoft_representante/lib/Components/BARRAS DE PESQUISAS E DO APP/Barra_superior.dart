@@ -1,5 +1,6 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
+import 'package:pacsoft_representante/Components/Sair.dart';
 import 'package:pacsoft_representante/HOME/PERFIL/PG_PERFIL.dart';
 
 class barra_superior extends StatefulWidget implements PreferredSizeWidget{
@@ -47,7 +48,19 @@ class Barra extends State<barra_superior>{
               );
             }, icon: Icon(Icons.account_circle_outlined,size: 40,)),
           )
+        ),
+
+        Padding(padding: EdgeInsets.only(right: 30),
+          child:  SizedBox(
+            child: IconButton(onPressed:(){
+              Navigator.push(
+                context, 
+                MaterialPageRoute(builder: (context) => Sair(), fullscreenDialog: false)
+              );
+            }, icon: Icon(Icons.logout,size: 40,)),
+          )
         )
+
         ],
         backgroundColor: Color(0xFFA5D6A7),
       );

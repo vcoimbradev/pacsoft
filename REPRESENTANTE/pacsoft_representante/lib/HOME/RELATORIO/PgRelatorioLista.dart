@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:pacsoft_representante/Components/BARRAS%20DE%20PESQUISAS%20E%20DO%20APP/Barra_inferior.dart';
 import 'package:pacsoft_representante/Components/BARRAS%20DE%20PESQUISAS%20E%20DO%20APP/Barra_pesquisa.dart';
 import 'package:pacsoft_representante/Components/BARRAS%20DE%20PESQUISAS%20E%20DO%20APP/Barra_superior.dart';
-import 'package:pacsoft_representante/HOME/RELATORIO/PG_CLIENTESSEMPEDIDOS.dart';
+import 'package:pacsoft_representante/HOME/RELATORIO/PG_CLIENTESINATIVOS.dart';
 import 'package:pacsoft_representante/HOME/RELATORIO/PG_COMISSAOMES.dart';
+import 'package:pacsoft_representante/HOME/RELATORIO/PG_TODOSOSPEDIDOSMES.dart';
+import 'package:pacsoft_representante/HOME/RELATORIO/PG_TODOSOSPEDIDOSRELATORIO.dart';
 
 class PgRelatorioLista extends StatelessWidget {
   const PgRelatorioLista({super.key});
@@ -28,7 +30,7 @@ class PgRelatorioLista extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => pg(), // Substitua pelo widget correto
+                        builder: (context) => PgTodosPedidosRelatorio(), // Substitua pelo widget correto
                       ),
                     );
                     // Navegar para a tela de pedidos por clientes
@@ -42,7 +44,7 @@ class PgRelatorioLista extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => (), // Substitua pelo widget correto
+                        builder: (context) => PgRelatorioPedidosMes(), // Substitua pelo widget correto
                       ),
                     );
                     // Navegar para a tela de pedidos do mês
@@ -56,7 +58,7 @@ class PgRelatorioLista extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => pgclientessempedidos(), // Substitua pelo widget correto
+                        builder: (context) => PgClientesInativos(), // Substitua pelo widget correto
                       ),
                     );
                     // Navegar para a tela de clientes sem pedidos

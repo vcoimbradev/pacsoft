@@ -118,7 +118,7 @@ class _PgClientesInativosState extends State<PgClientesInativos> {
               pw.Row(
                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                 children: [
-                  pw.Text('Clientes sem pedidos em 30 dias\n${_formatarData(_dataAtual)}',
+                  pw.Text('Clientes sem pedidos mais que 30 dias\n${_formatarData(_dataAtual)}',
                       style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold)),
                   if (logo != null)
                     pw.Image(logo, width: 100, height: 50),
@@ -205,7 +205,7 @@ class _PgClientesInativosState extends State<PgClientesInativos> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Clientes sem pedidos em 30 dias',
+                  'Clientes sem pedidos mais que 30 dias',
                   style: TextStyle(
                     fontFamily: 'Lato',
                     fontWeight: FontWeight.w800,
