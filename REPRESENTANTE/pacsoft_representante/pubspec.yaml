@@ -28,6 +28,9 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  shelf: ^1.4.0
+  shelf_router: ^1.1.4
+  mysql1: ^0.20.0
   flutter:
     sdk: flutter
   intl: ^0.18.1
