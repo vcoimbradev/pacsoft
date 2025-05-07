@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_inferior.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_pesquisa.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_superior.dart';
+import 'package:pacsoft_representante/HOME/CLIENTES/PG_EDITARCLIENTE.dart';
 
 class PgTodosClientes extends StatefulWidget {
   const PgTodosClientes({super.key});
@@ -121,6 +122,12 @@ class _PgTodosClientesState extends State<PgTodosClientes> {
                               child: IconButton(
                                 icon: Icon(Icons.edit, color: Colors.blue),
                                 onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => PgEditarCliente(), // Substitua pelo widget correto
+                                    ),
+                                  );
                                   // Ação de editar cliente
                                 },
                               ),
