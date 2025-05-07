@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pacsoft_representante/HOME/INICIAL/PG_INICIAL.dart';
+import 'package:pacsoft_representante/HOME/LOGIN/PG_LOGIN.dart';
 
 
 
@@ -9,7 +10,7 @@ class Pacsoft extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home:  PgInicial(),
+      home:  Login(),
     );
   }
 }

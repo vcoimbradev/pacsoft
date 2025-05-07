@@ -1,6 +1,6 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
-import 'package:pacsoft_representante/Components/Sair.dart';
+import 'package:pacsoft_representante/HOME/LOGIN/PG_LOGIN.dart';
 import 'package:pacsoft_representante/HOME/PERFIL/PG_PERFIL.dart';
 
 class barra_superior extends StatefulWidget implements PreferredSizeWidget{
@@ -55,7 +55,7 @@ class Barra extends State<barra_superior>{
             child: IconButton(onPressed:(){
               Navigator.push(
                 context, 
-                MaterialPageRoute(builder: (context) => Sair(), fullscreenDialog: false)
+                MaterialPageRoute(builder: (context) => Login(), fullscreenDialog: false)
               );
             }, icon: Icon(Icons.logout,size: 40,)),
           )

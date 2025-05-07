@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pacsoft_representante/HOME/INICIAL/PG_INICIAL.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -83,7 +84,12 @@ class botao extends StatelessWidget{
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed:(){
-        print("pressionado");
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PgInicial(), // Substitua pela tela desejada
+          ),
+        );
       }, 
       style: ElevatedButton.styleFrom(
           textStyle: TextStyle(fontSize: 18),

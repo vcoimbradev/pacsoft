@@ -110,11 +110,11 @@ class _PgEditarClienteState extends State<PgEditarCliente> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         _buildBotaoAcao(
-                          texto: 'Cancelar Alteracão',
+                          texto: 'Cancelar Alteração',
                           icone: 'lixeira.png',
                         ),
                         _buildBotaoAcao(
-                          texto: 'Salvar Alteracão',
+                          texto: 'Salvar Alteração',
                           icone: 'disquete.png',
                         ),
                       ],
