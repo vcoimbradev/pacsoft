@@ -1,106 +1,178 @@
 import 'package:flutter/material.dart';
 import 'package:pacsoft_representante/HOME/INICIAL/PG_INICIAL.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Login extends StatefulWidget {
   const Login({super.key});
 
   @override
-  State<StatefulWidget> createState() {
-    return login();
-  }
+  State<Login> createState() => _LoginState();
 }
 
-class login extends State<Login> {
+class _LoginState extends State<Login> {
+  final TextEditingController _cnpjCpfController = TextEditingController();
+  final TextEditingController _senhaController = TextEditingController();
+  bool _isLoading = false;
+  bool _obscurePassword = true;
+
+  Future<void> _login() async {
+    // Validação simples
+    if (_cnpjCpfController.text.isEmpty || _senhaController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Preencha todos os campos')),
+      );
+      return;
+    }
+
+    setState(() => _isLoading = true);
+
+    try {
+      final response = await http.post(
+        Uri.parse('http://0.0.0.0:8080/login'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'cnpj_cpf': _cnpjCpfController.text,
+          'senha': _senhaController.text,
+        }),
+      ).timeout(const Duration(seconds: 10));
+
+      final data = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => PgInicial()),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(data['message'] ?? 'Falha no login')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro: ${e.toString()}')),
+      );
+    } finally {
+      setState(() => _isLoading = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("BAGSOFT", selectionColor: Colors.black, 
-        
-        style: TextStyle(
-          fontFamily: 'Etno',
-          fontWeight: FontWeight.w300,
-        ),
+        title: Text(
+          "BAGSOFT",
+          style: TextStyle(
+            fontFamily: 'Etno',
+            fontWeight: FontWeight.w300,
+            color: Colors.black,
+          ),
         ),
         backgroundColor: const Color.fromARGB(255, 165, 214, 167),
       ),
-
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        color: const Color.fromARGB(255, 250, 239, 233),
-        child: Align(
-          alignment: Alignment(0, -1),
-        child: Column(
-        mainAxisAlignment: MainAxisAlignment.start, 
-        children:[
-        Image.asset('assets/images/logo.png', height: 250, width: 200),
-        Text('CPF E CNPJ', style: TextStyle(fontSize: 18,
-          fontFamily: 'Lato',
-          fontWeight: FontWeight.w500,),
-        ),
-        SizedBox(
-          width: 300,
-          child:TextField(
-          textAlign: TextAlign.center,
-          decoration: InputDecoration(
-            hintText: 'Digite seu CNPJ ou CPF',
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(100)
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: double.infinity,
+          color: const Color.fromARGB(255, 250, 239, 233),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset('assets/images/logo.png', height: 150, width: 150),
+                const SizedBox(height: 30),
+                Text(
+                  'CPF OU CNPJ',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontFamily: 'Lato',
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                SizedBox(
+                  width: 300,
+                  child: TextField(
+                    controller: _cnpjCpfController,
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(
+                      hintText: 'Digite seu CNPJ ou CPF',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                    ),
+                    keyboardType: TextInputType.number,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  'SENHA',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontFamily: 'Lato',
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                SizedBox(
+                  width: 300,
+                  child: TextField(
+                    controller: _senhaController,
+                    obscureText: _obscurePassword,
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(
+                      hintText: 'Digite sua senha',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscurePassword
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _obscurePassword = !_obscurePassword;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                SizedBox(
+                  width: 200,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: _isLoading ? null : _login,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 165, 214, 167),
+                      foregroundColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                    child: _isLoading
+                        ? const CircularProgressIndicator(color: Colors.black)
+                        : const Text(
+                            "ENTRAR",
+                            style: TextStyle(
+                              fontFamily: 'Lato',
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18,
+                            ),
+                          ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
-        ),
-        SizedBox(height: 10,),
-        Text('SENHA', style: TextStyle(fontSize: 18,
-          fontFamily: 'Lato',
-          fontWeight: FontWeight.w500,),
-        ),
-        SizedBox(
-          width: 300,
-          child:TextField(
-          textAlign: TextAlign.center,
-          decoration: InputDecoration(
-            hintText: 'Digite sua senha',
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(100)
-            ),
-          ),
-        ),
-        ),
-        SizedBox(height: 10,),
-        botao()]
-      ),
-      ),
       ),
     );
   }
-}
-
-class botao extends StatelessWidget{
-  const botao({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed:(){
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => PgInicial(), // Substitua pela tela desejada
-          ),
-        );
-      }, 
-      style: ElevatedButton.styleFrom(
-          textStyle: TextStyle(fontSize: 18),
-          backgroundColor: Color.fromARGB(255, 165, 214, 167),
-          foregroundColor: Color.fromARGB(255, 0, 0, 0)
-      ),
-      child: Text("ENTRAR",
-       style: TextStyle(
-          fontFamily: 'Lato',
-          fontWeight: FontWeight.w500,
-        ),)
-      );
-  } 
 }

@@ -1,10 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mysql1/mysql1.dart';
 import 'package:shelf/shelf.dart';
+import 'package:shelf/shelf_io.dart';
 import 'package:shelf_router/shelf_router.dart' as shelf_router;
 
 Future<MySqlConnection> conectarBanco() async {
@@ -19,6 +18,34 @@ Future<MySqlConnection> conectarBanco() async {
   );
 
   return MySqlConnection.connect(settings);
+}
+
+Future<Response> login(Request request) async {
+  final conn = await conectarBanco();
+  try {
+    final payload = await request.readAsString();
+    final data = jsonDecode(payload);
+
+    final cnpjCpf = data['cnpj_cpf'];
+    final senha = data['senha'];
+
+    var results = await conn.query(
+      'SELECT * FROM representantes WHERE cnpj = ? OR cpf = ? AND senha = ?',
+      [cnpjCpf, senha],
+    );
+
+    if (results.isNotEmpty) {
+      return Response.ok(jsonEncode({'status': 'sucesso'}), headers: {
+        'Content-Type': 'application/json',
+      });
+    } else {
+      return Response.forbidden('Usuário ou senha inválidos');
+    }
+  } catch (e) {
+    return Response.internalServerError(body: 'Erro ao processar login: $e');
+  } finally {
+    await conn.close();
+  }
 }
 
 Future<Response> inserirDados(Request request) async {
@@ -53,10 +80,26 @@ Future<Response> inserirDados(Request request) async {
   }
 }
 
-shelf_router.Router criarRotaInserir() {
+shelf_router.Router inserir_cliente() {
   final router = shelf_router.Router();
 
   router.post('/inserir_cliente', inserirDados);
 
   return router;
+}
+
+shelf_router.Router Login() {
+  final router = shelf_router.Router();
+
+  router.post('/login', login);
+
+  return router;
+}
+
+void main() async {
+  final router2 = inserirDados;
+  final router = Login();
+
+  final server = await serve(router, 'localhost', 8080);
+  print('Servidor rodando em http://${server.address.host}:${server.port}');
 }
