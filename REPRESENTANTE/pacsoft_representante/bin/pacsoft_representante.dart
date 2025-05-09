@@ -5,9 +5,11 @@ import 'package:mysql1/mysql1.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 import 'package:shelf_router/shelf_router.dart' as shelf_router;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 
 Future<MySqlConnection> conectarBanco() async {
-  final config = jsonDecode(await File('config.json').readAsString());
+  final config = dotenv.env;
 
   var settings = ConnectionSettings(
     host: config['db_host'],
@@ -21,8 +23,9 @@ Future<MySqlConnection> conectarBanco() async {
 }
 
 Future<Response> login(Request request) async {
-  final conn = await conectarBanco();
+  MySqlConnection? conn;
   try {
+  conn = await conectarBanco();
     final payload = await request.readAsString();
     final data = jsonDecode(payload);
 
