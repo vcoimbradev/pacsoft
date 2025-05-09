@@ -1,0 +1,2 @@
+C:/Users/ingri/Desktop/Nova pasta/pacsoft/REPRESENTANTE/pacsoft_representante/android/app/.cxx/Debug/2di5d2h1/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/ingri/Desktop/Nova pasta/pacsoft/REPRESENTANTE/pacsoft_representante/android/app/.cxx/Debug/2di5d2h1/x86_64/CMakeFiles/rebuild_cache.dir
