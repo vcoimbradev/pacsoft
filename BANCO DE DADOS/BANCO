@@ -1,0 +1,85 @@
+/*-- Criação do banco de dados
+CREATE DATABASE IF NOT EXISTS pacsoft;
+USE pacsoft;
+
+-- Tabela de representantes (agora sem vírgula extra e com tipos de dados corrigidos)
+CREATE TABLE IF NOT EXISTS representantes (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(255) NOT NULL,
+    cpf VARCHAR(11) UNIQUE NOT NULL,  -- Alterado para VARCHAR para preservar zeros à esquerda
+    cnpj VARCHAR(14) UNIQUE,          -- Alterado para VARCHAR
+    chave_pix VARCHAR(50),            -- Opcional
+    telefone VARCHAR(11) NOT NULL,    -- Alterado para VARCHAR
+    senha VARCHAR(255) NOT NULL       -- Removida vírgula extra
+);
+
+-- Tabela de contas bancárias
+CREATE TABLE IF NOT EXISTS conta_bancaria (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    banco VARCHAR(255) NOT NULL,
+    agencia VARCHAR(5) NOT NULL,      -- Alterado para VARCHAR
+    conta VARCHAR(50) NOT NULL,       -- Alterado para VARCHAR
+    id_representante INT NOT NULL,
+    CONSTRAINT FK_CONTA_REPRESENTANTE FOREIGN KEY (id_representante) REFERENCES representantes(id)
+);
+
+-- Tabela de clientes (com tipos de dados corrigidos)
+CREATE TABLE IF NOT EXISTS clientes (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    razao_social VARCHAR(255) NOT NULL,
+    cnpj VARCHAR(14) UNIQUE NOT NULL,          -- Alterado para VARCHAR
+    inscricao_estadual VARCHAR(12) NOT NULL,   -- Alterado para VARCHAR
+    endereco VARCHAR(255) NOT NULL,
+    bairro VARCHAR(30) NOT NULL,
+    cidade VARCHAR(100) NOT NULL,
+    estado VARCHAR(30) NOT NULL,
+    cep VARCHAR(8) NOT NULL,                   -- Alterado para VARCHAR
+    email VARCHAR(255) NOT NULL,
+    telefone VARCHAR(11) NOT NULL,             -- Alterado para VARCHAR
+    id_representante INT NOT NULL,
+    CONSTRAINT FK_CLIENTES_REPRESENTANTE FOREIGN KEY (id_representante) REFERENCES representantes(id)
+);
+
+-- Tabela de produtos
+CREATE TABLE IF NOT EXISTS produtos (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome_do_produto VARCHAR(255) NOT NULL,
+    preco DECIMAL(10,2) NOT NULL,
+    tamanho VARCHAR(50) NOT NULL,
+    quantidadekg INT NOT NULL,
+    quantidadefd INT NOT NULL
+);
+
+-- Tabela de pedidos (unificada e aprimorada)
+CREATE TABLE IF NOT EXISTS pedidos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    status_producao VARCHAR(100) NOT NULL,
+    status_envio VARCHAR(100) NOT NULL,
+    situacao_pagamento VARCHAR(100) NOT NULL,
+    status_pedido VARCHAR(100) NOT NULL,       -- Campo unificado
+    observacoes VARCHAR(500),                  -- Aumentado o tamanho e renomeado
+    comissao DECIMAL(5,2) NOT NULL DEFAULT 3.00, -- Decimal para porcentagem
+    forma_pagamento VARCHAR(100) NOT NULL,
+    valor_total DECIMAL(10,2) NOT NULL,
+    quantidade_kg INT NOT NULL,
+    quantidade_fd INT NOT NULL,
+    condicao_pagamento VARCHAR(20) NOT NULL,
+    data_pedido DATE NOT NULL,
+    data_atualizacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    id_representante INT NOT NULL,
+    id_cliente INT NOT NULL,
+    CONSTRAINT FK_PEDIDOS_REPRESENTANTE FOREIGN KEY (id_representante) REFERENCES representantes(id),
+    CONSTRAINT FK_PEDIDOS_CLIENTE FOREIGN KEY (id_cliente) REFERENCES clientes(id)
+);
+
+-- Tabela de itens dos pedidos (nova tabela para relacionar produtos com pedidos)
+CREATE TABLE IF NOT EXISTS pedido_itens (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    id_pedido INT NOT NULL,
+    id_produto INT NOT NULL,
+    quantidade INT NOT NULL,
+    preco_unitario DECIMAL(10,2) NOT NULL,
+    subtotal DECIMAL(10,2) GENERATED ALWAYS AS (quantidade * preco_unitario) STORED,
+    CONSTRAINT FK_ITENS_PEDIDO FOREIGN KEY (id_pedido) REFERENCES pedidos(id) ON DELETE CASCADE,
+    CONSTRAINT FK_ITENS_PRODUTO FOREIGN KEY (id_produto) REFERENCES produtos(id)
+);*/
