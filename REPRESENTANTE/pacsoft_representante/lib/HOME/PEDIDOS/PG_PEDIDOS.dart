@@ -233,7 +233,7 @@ class pginicialstate extends State<PgPedidos> {
                 Observacoes(),
                 SizedBox(height: 20),
                 Pesomedio(),
-                Valormedio(),
+                Valormmedio(),
                 SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
