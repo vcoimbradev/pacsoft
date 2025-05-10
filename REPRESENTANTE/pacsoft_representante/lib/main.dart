@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:pacsoft_representante/BANCODEDADOS.dart';
 import 'package:pacsoft_representante/HOME/LOGIN/PG_LOGIN.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(Pacsoft());
+  await Hive.initFlutter();
+  await DBHelper.inicializar();
+  runApp(const Pacsoft());
 }
 
 class Pacsoft extends StatelessWidget {

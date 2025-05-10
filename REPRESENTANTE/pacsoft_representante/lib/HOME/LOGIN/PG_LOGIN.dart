@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pacsoft_representante/HOME/INICIAL/PG_INICIAL.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:pacsoft_representante/BANCODEDADOS.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -17,7 +16,6 @@ class _LoginState extends State<Login> {
   bool _obscurePassword = true;
 
   Future<void> _login() async {
-    // Validação simples
     if (_cnpjCpfController.text.isEmpty || _senhaController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Preencha todos os campos')),
@@ -28,25 +26,19 @@ class _LoginState extends State<Login> {
     setState(() => _isLoading = true);
 
     try {
-      final response = await http.post(
-        Uri.parse('http://localhost:8080/login'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'cnpj_cpf': _cnpjCpfController.text,
-          'senha': _senhaController.text,
-        }),
-      ).timeout(const Duration(seconds: 10));
+      final autenticado = await DBHelper.autenticar(
+        _cnpjCpfController.text,
+        _senhaController.text,
+      );
 
-      final data = jsonDecode(response.body);
-
-      if (response.statusCode == 200) {
+      if (autenticado) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => PgInicial()),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(data['message'] ?? 'Falha no login')),
+          const SnackBar(content: Text('Usuário ou senha inválidos')),
         );
       }
     } catch (e) {

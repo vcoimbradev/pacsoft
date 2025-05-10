@@ -14,7 +14,7 @@ class pesomediostate extends State<Pesomedio> {
   Widget build(BuildContext context) {
     return Column(children: [
       Text(
-        'Peso médio total do pedido em R$:',
+        'Peso médio total do pedido em R\$:',
         style: TextStyle(
             fontFamily: 'Lato', fontWeight: FontWeight.w800, fontSize: 15),
       ),

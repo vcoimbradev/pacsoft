@@ -14,7 +14,7 @@ class valormediostate extends State<Valormedio> {
   Widget build(BuildContext context) {
     return Column(children: [
       Text(
-        'Valor médio total do pedido em KG:',
+        'Valor médio total do pedido em R\$:',
         style: TextStyle(
             fontFamily: 'Lato', fontWeight: FontWeight.w800, fontSize: 15),
       ),

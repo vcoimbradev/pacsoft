@@ -4,7 +4,7 @@ import 'package:pacsoft_representante/Components/BARRAS%20DE%20PESQUISAS%20E%20D
 import 'package:pacsoft_representante/Components/BARRAS%20DE%20PESQUISAS%20E%20DO%20APP/Barra_superior.dart';
 import 'package:pacsoft_representante/HOME/PEDIDOS/PG_PEDIDOS.dart';
 import 'package:pacsoft_representante/HOME/PEDIDOS/PG_PEDIDOSEMABERTO.dart';
-import 'package:pacsoft_representante/HOME/PEDIDOS/PG_TODOSOSPEDIDOS';
+import 'package:pacsoft_representante/HOME/PEDIDOS/PG_TODOSOSPEDIDOS.dart';
 
 class PgPedidosLista extends StatelessWidget {
   const PgPedidosLista({super.key});
