@@ -29,7 +29,7 @@ class _LoginState extends State<Login> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://0.0.0.0:8080/login'),
+        Uri.parse('http://localhost:8080/login'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'cnpj_cpf': _cnpjCpfController.text,
