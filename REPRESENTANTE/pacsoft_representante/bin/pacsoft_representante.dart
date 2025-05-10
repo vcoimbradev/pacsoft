@@ -126,7 +126,7 @@ Future<Response> inserirDados(Request request) async {
 shelf_router.Router criarRotas() {
   final router = shelf_router.Router();
 
-  router.post('/login2', login);
+  router.post('/login', login);
   router.post('/inserir_cliente', inserirDados);
 
   return router;
