@@ -32,6 +32,7 @@ class _LoginState extends State<Login> {
       );
 
       if (autenticado) {
+        DBHelper.Nomedorepresentante = _cnpjCpfController.text;
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => PgInicial()),

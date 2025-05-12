@@ -15,6 +15,8 @@ class Barra_pesquisa extends StatefulWidget implements PreferredSizeWidget{
 }
 
 class barra extends State<Barra_pesquisa>{
+  String filtro = '';
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,6 +29,11 @@ class barra extends State<Barra_pesquisa>{
                     borderRadius: BorderRadius.circular(25),
                 ),
                 child: TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      filtro = value;
+                    });
+                  },
                   decoration: InputDecoration(
                     hintStyle: TextStyle(color: Colors.grey),
                     hintText: "Pesquise pela razão social ou CNPJ",
@@ -43,4 +50,14 @@ class barra extends State<Barra_pesquisa>{
             );
   }
   
+  List<Map<String, String>> clientes = [
+    {'razaoSocial': 'Empresa A', 'cnpj': '12345678901234'},
+    {'razaoSocial': 'Empresa B', 'cnpj': '23456789012345'},
+    // Adicione mais clientes conforme necessário
+  ];
+
+  List<Map<String, String>> get clientesFiltrados => clientes.where((cliente) =>
+    cliente['razaoSocial']!.toLowerCase().contains(filtro.toLowerCase()) ||
+    cliente['cnpj']!.toLowerCase().contains(filtro.toLowerCase())
+  ).toList();
 }

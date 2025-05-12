@@ -33,12 +33,15 @@ dependencies:
   mysql1: ^0.20.0
   flutter:
     sdk: flutter
-  intl: ^0.18.1
+  flutter_localizations:
+    sdk: flutter
+  intl: 0.19.0
   sqflite: ^2.3.3
   path: ^1.9.0
   sqflite_common_ffi: ^2.3.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  uuid: ^3.0.7	
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -47,6 +50,7 @@ dependencies:
   printing: ^5.11.0
   path_provider: ^2.1.1
   flutter_dotenv: ^5.2.1
+  file_saver: ^0.2.14
 
 dev_dependencies:
   flutter_test:

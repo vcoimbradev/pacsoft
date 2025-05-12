@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
 
-class Valormedio extends StatefulWidget {
-  const Valormedio({super.key});
+class Valormedio extends StatelessWidget {
+  final double valorTotal;
+  const Valormedio({super.key, required this.valorTotal});
 
-  @override
-  State<StatefulWidget> createState() {
-    return valormediostate();
-  }
-}
-
-class valormediostate extends State<Valormedio> {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -18,9 +12,7 @@ class valormediostate extends State<Valormedio> {
         style: TextStyle(
             fontFamily: 'Lato', fontWeight: FontWeight.w800, fontSize: 15),
       ),
-      SizedBox(
-        height: 10,
-      ),
+      SizedBox(height: 10),
       Container(
         width: 100,
         height: 40,
@@ -29,11 +21,10 @@ class valormediostate extends State<Valormedio> {
         child: TextField(
           enabled: false,
           textAlign: TextAlign.center,
+          controller: TextEditingController(text: valorTotal.toStringAsFixed(2)),
           decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(vertical: 10),
-            hintText: '',
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(100)),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(100)),
           ),
         ),
       ),

@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_inferior.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_pesquisa.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_superior.dart';
+import 'package:hive/hive.dart';
 
 class PgEditarCliente extends StatefulWidget {
-  const PgEditarCliente({super.key});
+  final Map cliente;
 
+  const PgEditarCliente({super.key, required this.cliente});
   @override
   State<StatefulWidget> createState() => _PgEditarClienteState();
 }
@@ -13,7 +15,29 @@ class PgEditarCliente extends StatefulWidget {
 class _PgEditarClienteState extends State<PgEditarCliente> {
   final TextEditingController _razaoSocialController = TextEditingController();
   final TextEditingController _cnpjController = TextEditingController();
-  // Adicione os outros controllers conforme necessário...
+  final TextEditingController _inscricaoEstadualController =
+      TextEditingController();
+  final TextEditingController _enderecoController = TextEditingController();
+  final TextEditingController _bairroController = TextEditingController();
+  final TextEditingController _cidadeUfController = TextEditingController();
+  final TextEditingController _cepController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _contatoController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _razaoSocialController.text = widget.cliente['razao_social'] ?? '';
+    _cnpjController.text = widget.cliente['cnpj'] ?? '';
+    _inscricaoEstadualController.text =
+        widget.cliente['inscricaoEstadual'] ?? '';
+    _enderecoController.text = widget.cliente['endereco'] ?? '';
+    _bairroController.text = widget.cliente['bairro'] ?? '';
+    _cidadeUfController.text = widget.cliente['cidade'] ?? '';
+    _cepController.text = widget.cliente['cep'] ?? '';
+    _emailController.text = widget.cliente['email'] ?? '';
+    _contatoController.text = widget.cliente['contato'] ?? '';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,74 +61,73 @@ class _PgEditarClienteState extends State<PgEditarCliente> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    
+
                     // Campo Razão Social
                     _buildCampoTexto(
                       label: 'Razão social',
                       controller: _razaoSocialController,
                     ),
-                    
+
                     // Campo CNPJ
                     _buildCampoTexto(
                       label: 'CNPJ',
                       controller: _cnpjController,
                       keyboardType: TextInputType.number,
                     ),
-                    
+
                     // Campo Inscrição Estadual
                     _buildCampoTexto(
                       label: 'Insc. estadual',
-                      controller: TextEditingController(),
+                      controller: _inscricaoEstadualController,
                     ),
-                    
+
                     // Campo Endereço
                     _buildCampoTexto(
                       label: 'Endereço',
-                      controller: TextEditingController(),
+                      controller: _enderecoController,
                     ),
-                    
+
                     // Linha com Bairro e Cidade/UF
                     Row(
                       children: [
                         Expanded(
                           child: _buildCampoTexto(
                             label: 'Bairro',
-                            controller: TextEditingController(),
+                            controller: _bairroController,
                           ),
                         ),
                         SizedBox(width: 10),
                         Expanded(
                           child: _buildCampoTexto(
                             label: 'Cidade / UF',
-                            controller: TextEditingController(),
+                            controller: _cidadeUfController,
                           ),
                         ),
                       ],
                     ),
-                    
+
                     // Campo CEP
                     _buildCampoTexto(
                       label: 'CEP',
-                      controller: TextEditingController(),
+                      controller: _cepController,
                       keyboardType: TextInputType.number,
                     ),
-                    
+
                     // Campo Email
                     _buildCampoTexto(
                       label: 'Email',
-                      controller: TextEditingController(),
+                      controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
                     ),
-                    
+
                     // Campo Contato
                     _buildCampoTexto(
                       label: 'Contato',
-                      controller: TextEditingController(),
+                      controller: _contatoController,
                       keyboardType: TextInputType.phone,
                     ),
-                    
                     SizedBox(height: 30),
-                    
+
                     // Botões Inferiores
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -112,10 +135,30 @@ class _PgEditarClienteState extends State<PgEditarCliente> {
                         _buildBotaoAcao(
                           texto: 'Cancelar Alteração',
                           icone: 'lixeira.png',
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                         ),
                         _buildBotaoAcao(
                           texto: 'Salvar Alteração',
                           icone: 'disquete.png',
+                          onPressed: () async {
+                            final box = await Hive.openBox('clientes');
+                            final key = widget.cliente['key']; // Certifique-se de que o mapa contém a chave 'key'
+                            await box.put(key, {
+                              'razaoSocial': _razaoSocialController.text,
+                              'cnpj': _cnpjController.text,
+                              'inscricaoEstadual':
+                                  _inscricaoEstadualController.text,
+                              'endereco': _enderecoController.text,
+                              'bairro': _bairroController.text,
+                              'cidadeUf': _cidadeUfController.text,
+                              'cep': _cepController.text,
+                              'email': _emailController.text,
+                              'contato': _contatoController.text,
+                            });
+                            Navigator.pop(context);
+                          },
                         ),
                       ],
                     ),
@@ -178,9 +221,10 @@ class _PgEditarClienteState extends State<PgEditarCliente> {
     required String texto,
     required String icone,
     Color? cor,
+    VoidCallback? onPressed,
   }) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: cor ?? Colors.grey[200],
         foregroundColor: Colors.black,

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Observacoes extends StatefulWidget {
-  const Observacoes({super.key});
+  final TextEditingController controller;
+  const Observacoes({super.key, required this.controller});
 
   @override
   State<StatefulWidget> createState() {
@@ -23,6 +24,7 @@ class observacoesstate extends State<Observacoes> {
           width: 300,
           height: 40,
           child: TextField(
+            controller: widget.controller,
             textAlign: TextAlign.center,
             decoration: InputDecoration(
               contentPadding:

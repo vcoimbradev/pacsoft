@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_inferior.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_pesquisa.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_superior.dart';
+import 'package:hive/hive.dart';
 
 class PgCadastroCliente extends StatefulWidget {
   const PgCadastroCliente({super.key});
@@ -13,7 +14,14 @@ class PgCadastroCliente extends StatefulWidget {
 class _PgCadastroClienteState extends State<PgCadastroCliente> {
   final TextEditingController _razaoSocialController = TextEditingController();
   final TextEditingController _cnpjController = TextEditingController();
-  // Adicione os outros controllers conforme necessário...
+  final TextEditingController _inscricaoEstadualController =
+      TextEditingController();
+  final TextEditingController _enderecoController = TextEditingController();
+  final TextEditingController _bairroController = TextEditingController();
+  final TextEditingController _cidadeUfController = TextEditingController();
+  final TextEditingController _cepController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _contatoController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,74 +45,74 @@ class _PgCadastroClienteState extends State<PgCadastroCliente> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    
+
                     // Campo Razão Social
                     _buildCampoTexto(
                       label: 'Razão social',
                       controller: _razaoSocialController,
                     ),
-                    
+
                     // Campo CNPJ
                     _buildCampoTexto(
                       label: 'CNPJ',
                       controller: _cnpjController,
                       keyboardType: TextInputType.number,
                     ),
-                    
+
                     // Campo Inscrição Estadual
                     _buildCampoTexto(
                       label: 'Insc. estadual',
-                      controller: TextEditingController(),
+                      controller: _inscricaoEstadualController,
                     ),
-                    
+
                     // Campo Endereço
                     _buildCampoTexto(
                       label: 'Endereço',
-                      controller: TextEditingController(),
+                      controller: _enderecoController,
                     ),
-                    
+
                     // Linha com Bairro e Cidade/UF
                     Row(
                       children: [
                         Expanded(
                           child: _buildCampoTexto(
                             label: 'Bairro',
-                            controller: TextEditingController(),
+                            controller: _bairroController,
                           ),
                         ),
                         SizedBox(width: 10),
                         Expanded(
                           child: _buildCampoTexto(
                             label: 'Cidade / UF',
-                            controller: TextEditingController(),
+                            controller: _cidadeUfController,
                           ),
                         ),
                       ],
                     ),
-                    
+
                     // Campo CEP
                     _buildCampoTexto(
                       label: 'CEP',
-                      controller: TextEditingController(),
+                      controller: _cepController,
                       keyboardType: TextInputType.number,
                     ),
-                    
+
                     // Campo Email
                     _buildCampoTexto(
                       label: 'Email',
-                      controller: TextEditingController(),
+                      controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
                     ),
-                    
+
                     // Campo Contato
                     _buildCampoTexto(
                       label: 'Contato',
-                      controller: TextEditingController(),
+                      controller: _contatoController,
                       keyboardType: TextInputType.phone,
                     ),
-                    
+
                     SizedBox(height: 30),
-                    
+
                     // Botões Inferiores
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -116,6 +124,23 @@ class _PgCadastroClienteState extends State<PgCadastroCliente> {
                         _buildBotaoAcao(
                           texto: 'Salvar cadastro',
                           icone: 'disquete.png',
+                          onPressed: () async {
+                            final box = await Hive.openBox('clientes');
+                            await box.add({
+                              'razao_social': _razaoSocialController.text,
+                              'cnpj': _cnpjController.text,
+                              'inscricaoEstadual':
+                                  _inscricaoEstadualController.text,
+                              'endereco': _enderecoController.text,
+                              'bairro': _bairroController.text,
+                              'cidade': _cidadeUfController.text,
+                              'cep': _cepController.text,
+                              'email': _emailController.text,
+                              'contato': _contatoController.text,
+                            });
+                            Navigator.pop(
+                                context); // Volta para a tela anterior (Todos os Clientes)
+                          },
                         ),
                       ],
                     ),
@@ -178,9 +203,10 @@ class _PgCadastroClienteState extends State<PgCadastroCliente> {
     required String texto,
     required String icone,
     Color? cor,
+    VoidCallback? onPressed,
   }) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: cor ?? Colors.grey[200],
         foregroundColor: Colors.black,

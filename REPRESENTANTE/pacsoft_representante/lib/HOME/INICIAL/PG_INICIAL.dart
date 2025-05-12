@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:pacsoft_representante/BANCODEDADOS.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_pesquisa.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_superior.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_inferior.dart';
@@ -14,7 +16,23 @@ class PgInicial extends StatefulWidget {
   State<StatefulWidget> createState() => pginicialstage();
 }
 
+
+
 class pginicialstage extends State<PgInicial> {
+  String nomeUsuario = '';
+
+  @override
+  void initState() {
+    super.initState();
+    var reps = Hive.box('representantes');
+    var rep = reps.get(DBHelper.Nomedorepresentante);
+    if (rep != null) {
+      setState(() {
+        nomeUsuario = rep['nome'];
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,9 +45,9 @@ class pginicialstage extends State<PgInicial> {
               child: Column(
                 children: [
                   const SizedBox(height: 10),
-                  const Text(
-                    "Bem Vindo, !",
-                    style: TextStyle(
+                  Text(
+                    "Bem Vindo, $nomeUsuario!",
+                    style: const TextStyle(
                       fontFamily: 'Lato',
                       fontWeight: FontWeight.w300,
                       fontSize: 20,

@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 
 class Preco extends StatefulWidget {
-  const Preco({super.key});
+  final bool isMilheiro;
+  const Preco({super.key, this.isMilheiro = false});
 
   @override
   State<StatefulWidget> createState() {
@@ -14,7 +15,7 @@ class precostate extends State<Preco> {
   Widget build(BuildContext context) {
     return Column(children: [
       Text(
-        'Preço em KG:',
+        widget.isMilheiro ? 'Preço em Milheiro:' : 'Preço em KG:',
         style: TextStyle(
             fontFamily: 'Lato', fontWeight: FontWeight.w800, fontSize: 15),
       ),
@@ -34,4 +35,4 @@ class precostate extends State<Preco> {
       ),
     ]);
   }
-}
+}*/

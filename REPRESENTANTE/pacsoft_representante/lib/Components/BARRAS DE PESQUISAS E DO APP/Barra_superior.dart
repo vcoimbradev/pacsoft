@@ -1,5 +1,6 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
+import 'package:pacsoft_representante/BANCODEDADOS.dart';
 import 'package:pacsoft_representante/HOME/LOGIN/PG_LOGIN.dart';
 import 'package:pacsoft_representante/HOME/PERFIL/PG_PERFIL.dart';
 
@@ -52,12 +53,18 @@ class Barra extends State<barra_superior>{
 
         Padding(padding: EdgeInsets.only(right: 30),
           child:  SizedBox(
-            child: IconButton(onPressed:(){
-              Navigator.push(
-                context, 
-                MaterialPageRoute(builder: (context) => Login(), fullscreenDialog: false)
-              );
-            }, icon: Icon(Icons.logout,size: 40,)),
+            child: IconButton(
+              onPressed: () {
+                // Limpa o usuário logado
+                DBHelper.Nomedorepresentante = null;
+                // Redireciona para a tela de login e remove todas as telas anteriores
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => Login()),
+                  (Route<dynamic> route) => false,
+                );
+              },
+              icon: Icon(Icons.logout_outlined, size: 40),
+            ),
           )
         )
 

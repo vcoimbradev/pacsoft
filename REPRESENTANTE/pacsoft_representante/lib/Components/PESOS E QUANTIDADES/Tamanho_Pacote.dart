@@ -1,56 +1,38 @@
 import 'package:flutter/material.dart';
 
-class TamanhoPacote extends StatefulWidget {
+class TamanhoPacote extends StatelessWidget {
+  final String? produtoSelecionado;
+  final String? tamanhoSelecionado;
+  final ValueChanged<String?> onChanged;
 
-final String? produtoSelecionado; // Recebe o produto selecionado
-
-const TamanhoPacote({super.key, required this.produtoSelecionado});
-
-  @override
-  State<StatefulWidget> createState() {
-    return tamanhosstate();
-  }
-}
-
-class tamanhosstate extends State<TamanhoPacote> {
-  String? tamanhoselecionado;
-
-  @override
-  void didUpdateWidget(covariant TamanhoPacote oldWidget){
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.produtoSelecionado != widget.produtoSelecionado) {
-      setState(() {
-        tamanhoselecionado = null; // Reseta o tamanho selecionado ao mudar o produto
-      });
-    }
-  }
+  const TamanhoPacote({
+    super.key,
+    required this.produtoSelecionado,
+    required this.tamanhoSelecionado,
+    required this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
-    TamanhosPacoteCompleto();
-    final tamanhos = TamanhosPacoteCompleto().tamanhosPorProduto[widget.produtoSelecionado] ?? [];
+    final tamanhos = TamanhosPacoteCompleto().tamanhosPorProduto[produtoSelecionado] ?? [];
 
     return Column(
       children: [
         Text(
           'Tamanho:',
-          style: TextStyle(
-              fontFamily: 'Lato', fontWeight: FontWeight.w800, fontSize: 15),
+          style: TextStyle(fontFamily: 'Lato', fontWeight: FontWeight.w800, fontSize: 15),
         ),
         DropdownButton<String>(
-        hint: Text('Selecione'),
-        value: tamanhoselecionado,
-        items: tamanhos.map((tamanho){
-          return DropdownMenuItem<String>(
-            value: tamanho,
-            child: Text(tamanho),
-          );
-        }).toList(),
-         onChanged: (value){
-          setState(() {
-            tamanhoselecionado = value;
-          });
-         })
+          hint: Text('Selecione'),
+          value: tamanhoSelecionado,
+          items: tamanhos.map((tamanho) {
+            return DropdownMenuItem<String>(
+              value: tamanho,
+              child: Text(tamanho),
+            );
+          }).toList(),
+          onChanged: onChanged,
+        ),
       ],
     );
   }
@@ -89,9 +71,10 @@ class TamanhosPacoteCompleto {
     'Sacola de KG Branca': [
       '25x35',
       '30x40',
-      '35x50',
+      '30x45',
+      '35x45',
       '40x50',
-      '40x60',
+      '45x60',
       '50x60',
       '50x70',
       '60x80',
@@ -103,7 +86,7 @@ class TamanhosPacoteCompleto {
       '40x50',
       '50x60',
     ],
-    'Sacola de Milhero Verde': [
+    'Sacola de Milheiro Verde': [
       '30x40',
       '40x50',
     ],

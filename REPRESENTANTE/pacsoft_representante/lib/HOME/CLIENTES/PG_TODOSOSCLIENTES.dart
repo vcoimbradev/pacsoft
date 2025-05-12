@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_inferior.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_pesquisa.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_superior.dart';
@@ -13,24 +14,20 @@ class PgTodosClientes extends StatefulWidget {
 
 class _PgTodosClientesState extends State<PgTodosClientes> {
   // Lista de clientes (ilustrativa - será substituída pelos dados reais)
-  final List<Map<String, String>> clientes = [
-    {
-      'razaoSocial': 'Coimbra embalagens',
-      'cidade': 'Santo Antônio de Jesus',
-    },
-    {
-      'razaoSocial': 'Neto Fest',
-      'cidade': 'Amargosa',
-    },
-    {
-      'razaoSocial': 'Distribuidora Edel',
-      'cidade': 'Ubaíra',
-    },
-    {
-      'razaoSocial': 'Albertino Pack',
-      'cidade': 'Cruz das Almas',
-    },
-  ];
+  List<Map> clientes = [];
+
+  @override
+  void initState() {
+    super.initState();
+    carregarClientes();
+  }
+
+  Future<void> carregarClientes() async {
+    final box = await Hive.openBox('clientes');
+    setState(() {
+      clientes = box.values.cast<Map>().toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +108,7 @@ class _PgTodosClientesState extends State<PgTodosClientes> {
                           children: [
                             Expanded(
                               flex: 3,
-                              child: Text(cliente['razaoSocial']!),
+                              child: Text(cliente['razao_social']!),
                             ),
                             Expanded(
                               flex: 2,
@@ -125,10 +122,9 @@ class _PgTodosClientesState extends State<PgTodosClientes> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => PgEditarCliente(), // Substitua pelo widget correto
+                                      builder: (context) => PgEditarCliente(cliente: cliente),
                                     ),
-                                  );
-                                  // Ação de editar cliente
+                                  ).then((_) => carregarClientes()); // Atualiza lista ao voltar
                                 },
                               ),
                             ),
