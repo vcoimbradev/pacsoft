@@ -30,7 +30,7 @@ class PgClientesLista extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            PgCadastroCliente(), // Substitua pelo widget correto
+                            PgCadastroCliente(), // Substitua 'someCliente' pelo valor correto
                       ),
                     );
                     // Navegar para a tela de cadastro de cliente

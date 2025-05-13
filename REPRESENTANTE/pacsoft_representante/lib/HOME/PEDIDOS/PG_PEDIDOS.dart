@@ -17,7 +17,20 @@ import 'dart:html' as html;
 
 //import 'package:pacsoft_representante/Components/BOT%C3%95ES/Botao_cancelar.dart';
 class PgPedidos extends StatefulWidget {
-  const PgPedidos({super.key});
+  final String razao_social;
+  final String cnpj;
+  final String cidade;
+  final String idCliente;
+  final String idRepresentante;
+
+  const PgPedidos({
+    super.key,
+    required this.razao_social,
+    required this.cnpj,
+    required this.cidade,
+    required this.idCliente,
+    required this.idRepresentante,
+  });
 
   String? get tamanhoselecionado => null;
 
@@ -776,7 +789,9 @@ class pginicialstate extends State<PgPedidos> {
                   child: Text('Adicionar mais produtos'),
                 ),
                 SizedBox(height: 20),
-                Observacoes(controller: observacoesController,),
+                Observacoes(
+                  controller: observacoesController,
+                ),
                 SizedBox(height: 20),
                 Pesomedio(
                   pesoTotal: getPesoTotal(),
@@ -793,7 +808,7 @@ class pginicialstate extends State<PgPedidos> {
                     ),
                     Column(
                       children: [
-          /*              botao_guardar(onPressed: () {
+                        /*              botao_guardar(onPressed: () {
                           guardarPedido({
                             'razaoSocial': _razaoSocialController.text,
                             'cidade': _cidadeController.text,
@@ -820,6 +835,12 @@ class pginicialstate extends State<PgPedidos> {
   }
 
   Future<void> _confirmarPedido() async {
+    final clienteMap = await buscarClientePorId(widget.idCliente);
+    final razao = clienteMap?['razao_social'] ??
+        clienteMap?['razaoSocial'] ??
+        widget.razao_social;
+    final cidade =
+        clienteMap?['cidade'] ?? clienteMap?['cidadeUf'] ?? widget.cidade;
     // 1. Gerar PDF
     final pdf = pw.Document();
     pdf.addPage(
@@ -828,7 +849,8 @@ class pginicialstate extends State<PgPedidos> {
           return pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.start,
             children: [
-              pw.Text('Pedido', style: pw.TextStyle(fontSize: 24)),
+              pw.Text('pedido $razao - $cidade',
+                  style: pw.TextStyle(fontSize: 24)),
               pw.SizedBox(height: 16),
               pw.Text('Forma de pagamento: $pagamentoselecionado'),
               pw.Text('Prazo de pagamento: ${prazoController.text}'),
@@ -877,13 +899,17 @@ class pginicialstate extends State<PgPedidos> {
     if (result == 'salvar') {
       await Printing.sharePdf(bytes: await pdf.save(), filename: 'pedido.pdf');
     } else if (result == 'enviar') {
-      final cliente = "NOME_DO_CLIENTE";
       // 1. Baixar o PDF automaticamente
+
+      print('widget.cidade: ${widget.cidade}');
+      print('clienteMap: $clienteMap');
+      print('cidade usada: $cidade');
+
       final pdfBytes = await pdf.save();
       final blob = html.Blob([pdfBytes]);
       final url = html.Url.createObjectUrlFromBlob(blob);
       final anchor = html.AnchorElement(href: url)
-        ..download = 'pedido $cliente .pdf'
+        ..download = 'pedido $razao - $cidade .pdf'
         ..style.display = 'none';
       html.document.body!.children.add(anchor);
       anchor.click();
@@ -892,7 +918,8 @@ class pginicialstate extends State<PgPedidos> {
 
       // 2. Abrir o Gmail/Outlook com assunto e corpo preenchidos
 
-      final assunto = Uri.encodeComponent('Pedido - $nomeUsuario - $cliente');
+      final assunto =
+          Uri.encodeComponent('Pedido - $nomeUsuario - $razao - $cidade');
       final corpo = Uri.encodeComponent('Segue pedido em anexo.');
       final email = 'testebagsoft@gmail.com';
 
@@ -931,7 +958,8 @@ class pginicialstate extends State<PgPedidos> {
       }
 
       // 3. Mensagem para o usuário
-      await showDialog<String>(        context: context,
+      await showDialog<String>(
+        context: context,
         builder: (context) => AlertDialog(
           title: Text('Email'),
           content: Text('Anexe o PDF ao e-mail que foi aberto.'),
@@ -951,7 +979,7 @@ class pginicialstate extends State<PgPedidos> {
             children: [
               pw.Text('Pedido em aberto', style: pw.TextStyle(fontSize: 24)),
               pw.SizedBox(height: 16),
-              pw.Text('Razão Social: ${pedido['razaoSocial']}'),
+              pw.Text('Razão Social: ${pedido['razao_social']}'),
               pw.Text('Cidade: ${pedido['cidade']}'),
               pw.Text('Data: ${pedido['data']}'),
               // Adicione outros campos conforme necessário
@@ -981,7 +1009,8 @@ class pginicialstate extends State<PgPedidos> {
     );
 
     if (result == 'salvar') {
-      await Printing.sharePdf(bytes: await pdf.save(), filename: 'pedido_em_aberto.pdf');
+      await Printing.sharePdf(
+          bytes: await pdf.save(), filename: 'pedido_em_aberto.pdf');
     }
 
     // 3. Salvar o pedido localmente (Hive)
@@ -1062,7 +1091,9 @@ class botao_cancelar extends StatelessWidget {
         }
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => PgPedidosLista()), // Replace with an existing page
+          MaterialPageRoute(
+              builder: (context) =>
+                  PgPedidosLista()), // Replace with an existing page
           (route) => false, // Remove todas as telas anteriores
         );
       },
@@ -1079,4 +1110,16 @@ class botao_cancelar extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<Map?> buscarClientePorId(String idCliente) async {
+  final box = await Hive.openBox('clientes');
+  // Se o idCliente for a chave do Hive:
+  final cliente = box.get(idCliente);
+  // Se não encontrar, tente buscar pelo campo 'id_cliente'
+  if (cliente != null) return cliente;
+  return box.values.cast<Map>().firstWhere(
+        (c) => c['id_cliente'] == idCliente || c['idCliente'] == idCliente,
+        orElse: () => {},
+      );
 }

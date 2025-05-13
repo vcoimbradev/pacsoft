@@ -21,7 +21,7 @@ class PgPedidosLista extends StatelessWidget {
           Expanded(
             child: ListView(
               children: [
-                ListTile(
+               /* ListTile(
                   leading: const Icon(Icons.add_box, color: Colors.green),
                   title: const Text('Novo pedido'),
                   trailing: const Icon(Icons.arrow_forward_ios),
@@ -34,7 +34,7 @@ class PgPedidosLista extends StatelessWidget {
                     );
                     // Navegar para a tela de novo pedido
                   },
-                ),
+                ),*/
                 ListTile(
                   leading: const Icon(Icons.inventory, color: Colors.green),
                   title: const Text('Todos os pedidos'),

@@ -140,19 +140,19 @@ class pginicialstage extends State<PgInicial> {
                         cursor: SystemMouseCursors.click,
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
+                            /*Navigator.push(
+                               context,
+                             MaterialPageRoute(
                                 builder: (context) =>
                                     PgPedidos(), // Substitua pela sua tela
                               ),
-                            );
+                            );*/
                           },
                           child: Column(
                             children: [
                               Image.asset('assets/images/preco.png', width: 80),
                               const Text(
-                                "Preços",
+                                "Novo pedido",
                                 style: TextStyle(
                                   fontFamily: 'Lato',
                                   fontWeight: FontWeight.w500,

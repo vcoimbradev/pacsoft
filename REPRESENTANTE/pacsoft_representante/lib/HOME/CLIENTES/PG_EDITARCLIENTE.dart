@@ -146,13 +146,13 @@ class _PgEditarClienteState extends State<PgEditarCliente> {
                             final box = await Hive.openBox('clientes');
                             final key = widget.cliente['key']; // Certifique-se de que o mapa contém a chave 'key'
                             await box.put(key, {
-                              'razaoSocial': _razaoSocialController.text,
+                              'razao_social': _razaoSocialController.text,
                               'cnpj': _cnpjController.text,
                               'inscricaoEstadual':
                                   _inscricaoEstadualController.text,
                               'endereco': _enderecoController.text,
                               'bairro': _bairroController.text,
-                              'cidadeUf': _cidadeUfController.text,
+                              'cidade': _cidadeUfController.text,
                               'cep': _cepController.text,
                               'email': _emailController.text,
                               'contato': _contatoController.text,

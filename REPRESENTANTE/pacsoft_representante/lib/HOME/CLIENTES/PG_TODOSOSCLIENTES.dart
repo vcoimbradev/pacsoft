@@ -15,6 +15,7 @@ class PgTodosClientes extends StatefulWidget {
 class _PgTodosClientesState extends State<PgTodosClientes> {
   // Lista de clientes (ilustrativa - será substituída pelos dados reais)
   List<Map> clientes = [];
+  List<dynamic> keys = [];
 
   @override
   void initState() {
@@ -26,6 +27,7 @@ class _PgTodosClientesState extends State<PgTodosClientes> {
     final box = await Hive.openBox('clientes');
     setState(() {
       clientes = box.values.cast<Map>().toList();
+      keys = box.keys.toList();
     });
   }
 
@@ -96,7 +98,9 @@ class _PgTodosClientesState extends State<PgTodosClientes> {
                     ),
 
                     // Lista de clientes
-                    ...clientes.map((cliente) {
+                    ...clientes.asMap().entries.map((entry) {
+                      final key = keys[entry.key];
+                      final cliente = entry.value;
                       return Container(
                         margin: EdgeInsets.only(top: 8),
                         decoration: BoxDecoration(
@@ -108,11 +112,11 @@ class _PgTodosClientesState extends State<PgTodosClientes> {
                           children: [
                             Expanded(
                               flex: 3,
-                              child: Text(cliente['razao_social']!),
+                              child: Text(cliente['razao_social'] ?? ''),
                             ),
                             Expanded(
                               flex: 2,
-                              child: Text(cliente['cidade']!),
+                              child: Text(cliente['cidade'] ?? ''),
                             ),
                             Expanded(
                               flex: 1,
@@ -122,9 +126,9 @@ class _PgTodosClientesState extends State<PgTodosClientes> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => PgEditarCliente(cliente: cliente),
+                                      builder: (context) => PgEditarCliente(cliente: {...cliente, 'key': key}),
                                     ),
-                                  ).then((_) => carregarClientes()); // Atualiza lista ao voltar
+                                  ).then((_) => carregarClientes());
                                 },
                               ),
                             ),

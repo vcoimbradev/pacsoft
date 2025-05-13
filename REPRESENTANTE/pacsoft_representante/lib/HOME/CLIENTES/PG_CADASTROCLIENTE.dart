@@ -5,8 +5,7 @@ import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Ba
 import 'package:hive/hive.dart';
 
 class PgCadastroCliente extends StatefulWidget {
-  const PgCadastroCliente({super.key});
-
+ 
   @override
   State<StatefulWidget> createState() => _PgCadastroClienteState();
 }
@@ -126,7 +125,8 @@ class _PgCadastroClienteState extends State<PgCadastroCliente> {
                           icone: 'disquete.png',
                           onPressed: () async {
                             final box = await Hive.openBox('clientes');
-                            await box.add({
+                            final key = DateTime.now().toString(); // Replace with a unique key generator
+                            await box.put(key, {
                               'razao_social': _razaoSocialController.text,
                               'cnpj': _cnpjController.text,
                               'inscricaoEstadual':
