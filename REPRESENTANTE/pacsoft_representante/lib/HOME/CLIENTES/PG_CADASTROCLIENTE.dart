@@ -3,9 +3,10 @@ import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Ba
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_pesquisa.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_superior.dart';
 import 'package:hive/hive.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class PgCadastroCliente extends StatefulWidget {
- 
   @override
   State<StatefulWidget> createState() => _PgCadastroClienteState();
 }
@@ -84,6 +85,7 @@ class _PgCadastroClienteState extends State<PgCadastroCliente> {
                           child: _buildCampoTexto(
                             label: 'Cidade / UF',
                             controller: _cidadeUfController,
+                            enabled: false, // Apenas este campo desabilitado
                           ),
                         ),
                       ],
@@ -94,6 +96,11 @@ class _PgCadastroClienteState extends State<PgCadastroCliente> {
                       label: 'CEP',
                       controller: _cepController,
                       keyboardType: TextInputType.number,
+                      onChanged: (value) {
+                        if (value.length == 8) {
+                          _buscarCep(value);
+                        }
+                      },
                     ),
 
                     // Campo Email
@@ -125,7 +132,8 @@ class _PgCadastroClienteState extends State<PgCadastroCliente> {
                           icone: 'disquete.png',
                           onPressed: () async {
                             final box = await Hive.openBox('clientes');
-                            final key = DateTime.now().toString(); // Replace with a unique key generator
+                            final key = DateTime.now()
+                                .toString(); // Replace with a unique key generator
                             await box.put(key, {
                               'razao_social': _razaoSocialController.text,
                               'cnpj': _cnpjController.text,
@@ -160,6 +168,8 @@ class _PgCadastroClienteState extends State<PgCadastroCliente> {
     required String label,
     required TextEditingController controller,
     TextInputType keyboardType = TextInputType.text,
+    Function(String)? onChanged,
+    bool enabled = true, // Adicionado parâmetro enabled
   }) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 15.0),
@@ -182,8 +192,10 @@ class _PgCadastroClienteState extends State<PgCadastroCliente> {
               borderRadius: BorderRadius.circular(10),
             ),
             child: TextField(
+              enabled: enabled, // Usando o parâmetro enabled
               controller: controller,
               keyboardType: keyboardType,
+              onChanged: onChanged,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.symmetric(horizontal: 10),
                 border: OutlineInputBorder(
@@ -226,5 +238,25 @@ class _PgCadastroClienteState extends State<PgCadastroCliente> {
         ],
       ),
     );
+  }
+
+  Future<void> _buscarCep(String cep) async {
+    final url = Uri.parse('https://viacep.com.br/ws/$cep/json/');
+    try {
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final data = Map<String, dynamic>.from(jsonDecode(response.body));
+        if (!data.containsKey('erro')) {
+          setState(() {
+            _bairroController.text = data['bairro'] ?? '';
+            _cidadeUfController.text =
+                '${data['localidade'] ?? ''} / ${data['uf'] ?? ''}';
+            _enderecoController.text = data['logradouro'] ?? '';
+          });
+        }
+      }
+    } catch (e) {
+      // Trate o erro conforme necessário
+    }
   }
 }
