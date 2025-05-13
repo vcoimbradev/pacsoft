@@ -148,7 +148,7 @@ class pginicialstage extends State<PgInicial> {
                               ),
                             );*/
                           },
-                          child: Column(
+                          /*child: Column(
                             children: [
                               Image.asset('assets/images/preco.png', width: 80),
                               const Text(
@@ -175,7 +175,7 @@ class pginicialstage extends State<PgInicial> {
                                     PgComissaoMes(), // Substitua pela sua tela
                               ),
                             );
-                          },
+                          },*/
                           child: Column(
                             children: [
                               Image.asset('assets/images/comissao.png',

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_inferior.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_pesquisa.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_superior.dart';
+import 'package:hive/hive.dart';
+import 'package:pacsoft_representante/HOME/PEDIDOS/PG_PEDIDOS_INCOMPLETOS.dart';
 
 class PgPedidosAbertos extends StatefulWidget {
   const PgPedidosAbertos({super.key});
@@ -11,20 +13,49 @@ class PgPedidosAbertos extends StatefulWidget {
 }
 
 class _PgPedidosAbertosState extends State<PgPedidosAbertos> {
-  final List<Map<String, dynamic>> _pedidos = [
-    {'razaoSocial': 'Colemica embalagens', 'cidade': 'Santo Antônio de Jesus', 'data': '08/04/2025'},
-    {'razaoSocial': 'Distribuidora Edel', 'cidade': 'Ubaíra', 'data': '25/11/2024'},
-    {'razaoSocial': 'Albertino Pack', 'cidade': 'Cruz das Almas', 'data': '15/10/2024'},
-  ];
-
+  List<Map<String, dynamic>> _pedidos = [];
   final TextEditingController _filtroController = TextEditingController();
   String _ordenacaoData = 'none';
+
+  @override
+  void initState() {
+    super.initState();
+    _carregarPedidos();
+  }
+
+  Future<void> _carregarPedidos() async {
+    final box = await Hive.openBox('pedidos_em_aberto');
+    setState(() {
+      _pedidos = box.keys.map((key) {
+        final pedido = Map<String, dynamic>.from(box.get(key) as Map);
+        pedido['hiveKey'] = key; // Salva a chave do Hive
+        // Conversão segura para Map<String, dynamic>
+        // Converte data ISO para dd/mm/yyyy
+        if (pedido['data'] != null && pedido['data'].contains('-')) {
+          final data = DateTime.parse(pedido['data']);
+          pedido['data'] = _formatarData(data);
+        }
+        // Também converta a lista de produtos, se necessário
+        if (pedido['produtos'] != null && pedido['produtos'] is List) {
+          pedido['produtos'] = (pedido['produtos'] as List)
+              .map((p) => Map<String, dynamic>.from(p as Map))
+              .toList();
+        }
+        return pedido;
+      }).toList();
+    });
+  }
 
   String _formatarData(DateTime date) {
     return "${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}";
   }
 
   DateTime _parseData(String dateStr) {
+    if (dateStr.contains('-')) {
+      // Formato ISO, inclui segundos
+      return DateTime.parse(dateStr);
+    }
+    // Formato dd/MM/yyyy
     final parts = dateStr.split('/');
     return DateTime(int.parse(parts[2]), int.parse(parts[1]), int.parse(parts[0]));
   }
@@ -140,26 +171,44 @@ class _PgPedidosAbertosState extends State<PgPedidosAbertos> {
                               ],
                             ),
                           ),
-                          ..._pedidosFiltrados.map((pedido) => Container(
-                            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                            decoration: BoxDecoration(
-                              border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
-                            ),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 3,
-                                  child: Text(pedido['razaoSocial'], style: TextStyle(fontWeight: FontWeight.bold)),
+                          ..._pedidosFiltrados.map((pedido) => InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PgPedidos_Incompletos(
+                                    razao_social: pedido['razaoSocial'],
+                                    cnpj: pedido['cnpj'],
+                                    cidade: pedido['cidade'],
+                                    idCliente: pedido['idCliente'],
+                                    idRepresentante: pedido['idRepresentante'],
+                                    pedidoAnterior: pedido,
+                                    hiveKey: pedido['hiveKey'], // Passe a chave aqui
+                                  ),
                                 ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Text(pedido['cidade']),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Text(pedido['data']),
-                                ),
-                              ],
+                              );
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                              decoration: BoxDecoration(
+                                border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
+                              ),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 3,
+                                    child: Text(pedido['razaoSocial'], style: TextStyle(fontWeight: FontWeight.bold)),
+                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(pedido['cidade']),
+                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(pedido['data']),
+                                  ),
+                                ],
+                              ),
                             ),
                           )),
                         ],
