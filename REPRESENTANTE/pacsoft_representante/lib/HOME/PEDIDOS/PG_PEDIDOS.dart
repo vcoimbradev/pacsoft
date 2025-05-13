@@ -910,6 +910,14 @@ class pginicialstate extends State<PgPedidos> {
 
     if (result == 'salvar') {
       await Printing.sharePdf(bytes: await pdf.save(), filename: 'pedido.pdf');
+      Future<void> salvar(Map<String, dynamic> pedido) async {
+       // 3. Salvar o pedido localmente (Hive)
+    final box = await Hive.openBox('TodosPedidos');
+    await box.add(pedido);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Pedido salvo em aberto!')));
+      }
     } else if (result == 'enviar') {
       // 1. Baixar o PDF automaticamente
 
@@ -978,6 +986,31 @@ class pginicialstate extends State<PgPedidos> {
         ),
       );
     }
+
+    // Monte o pedido igual ao que salva em aberto
+    final pedidoParaSalvar = {
+      'razaoSocial': widget.razao_social,
+      'cnpj': widget.cnpj,
+      'cidade': widget.cidade,
+      'idCliente': widget.idCliente,
+      'idRepresentante': widget.idRepresentante,
+      'data': DateTime.now().toIso8601String(),
+      'pagamento': pagamentoselecionado,
+      'prazo': prazoController.text,
+      'produtos': pedidos,
+      'observacoes': observacoesController.text,
+      'pesoTotal': getPesoTotal(),
+      'valorTotal': getValorTotal(),
+    };
+
+    // Salva em todosPedidos
+    final boxTodos = await Hive.openBox('todosPedidos');
+    await boxTodos.add(pedidoParaSalvar);
+
+    // (Opcional) Mostre uma mensagem de sucesso
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Pedido salvo em Todos os Pedidos!')),
+    );
   }
 
   Future<void> guardarPedido(Map<String, dynamic> pedido) async {

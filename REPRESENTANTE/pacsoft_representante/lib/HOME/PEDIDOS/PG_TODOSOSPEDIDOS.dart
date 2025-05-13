@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_inferior.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_pesquisa.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_superior.dart';
@@ -11,16 +12,23 @@ class PgTodosPedidos extends StatefulWidget {
 }
 
 class _PgTodosPedidosState extends State<PgTodosPedidos> {
-  final List<Map<String, dynamic>> _pedidos = [
-    {'razaoSocial': 'Cotações emolubramas', 'cidade': 'Santa Anselmha de Jesus', 'data': '09/04/2022'},
-    {'razaoSocial': 'Nas Pintas', 'cidade': 'Avançapas', 'data': '04/04/2023'},
-    {'razaoSocial': 'Distribuidores Exitados', 'cidade': 'Unitas', 'data': '20/11/2028'},
-    {'razaoSocial': 'Alimentos Pintos', 'cidade': 'Cruz dos Altros', 'data': '15/10/2025'},
-    {'razaoSocial': 'Cotações emolubramas', 'cidade': 'Santa Anselmha de Jesus', 'data': '17/07/2024'},
-  ];
+  List<Map<String, dynamic>> _pedidos = [];
 
   final TextEditingController _filtroController = TextEditingController();
   String _ordenacaoData = 'none';
+
+  @override
+  void initState() {
+    super.initState();
+    _carregarTodosPedidos();
+  }
+
+  Future<void> _carregarTodosPedidos() async {
+    final box = await Hive.openBox('todosPedidos');
+    setState(() {
+      _pedidos = box.values.cast<Map<String, dynamic>>().toList();
+    });
+  }
 
   String _formatarData(DateTime date) {
     return "${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}";
