@@ -146,8 +146,12 @@ class _PgCadastroClienteState extends State<PgCadastroCliente> {
                               'email': _emailController.text,
                               'contato': _contatoController.text,
                             });
-                            Navigator.pop(
-                                context); // Volta para a tela anterior (Todos os Clientes)
+                            Navigator.pop(context, true);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                  content:
+                                      Text('Cliente salvo com sucesso!')),
+                            ); // Volta para a tela anterior (Todos os Clientes)
                           },
                         ),
                       ],

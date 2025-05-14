@@ -17,6 +17,9 @@ class DBHelper {
         'cpf': '12345678900',
         'cnpj': '00000000000199',
         'telefone': '11999999999',
+        'agencia': '1234',
+        'conta': '56789',
+        'pix': '11999999999',
         'senha': 'senha123'
       });
     }
