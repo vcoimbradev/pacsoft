@@ -16,10 +16,11 @@ class PgInicial extends StatefulWidget {
   State<StatefulWidget> createState() => pginicialstage();
 }
 
-
-
 class pginicialstage extends State<PgInicial> {
   String nomeUsuario = '';
+  int totalPedidos = 0;
+  int totalPedidosEmAberto = 0;
+  int totalPedidosConfirmados = 0;
 
   @override
   void initState() {
@@ -31,6 +32,17 @@ class pginicialstage extends State<PgInicial> {
         nomeUsuario = rep['nome'];
       });
     }
+    _carregarTotais();
+  }
+
+  Future<void> _carregarTotais() async {
+    final boxTodos = await Hive.openBox('todosPedidos');
+    final boxAbertos = await Hive.openBox('pedidos_em_aberto');
+    setState(() {
+      totalPedidosConfirmados = boxTodos.length;
+      totalPedidosEmAberto = boxAbertos.length;
+      totalPedidos = totalPedidosConfirmados + totalPedidosEmAberto;
+    });
   }
 
   @override
@@ -178,16 +190,8 @@ class pginicialstage extends State<PgInicial> {
                           },*/
                           child: Column(
                             children: [
-                              Image.asset('assets/images/comissao.png',
-                                  width: 80),
-                              const Text(
-                                "Comissão",
-                                style: TextStyle(
-                                  fontFamily: 'Lato',
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 15,
-                                ),
-                              ),
+                             
+                              
                             ],
                           ),
                         ),
@@ -226,7 +230,7 @@ class pginicialstage extends State<PgInicial> {
                                   textAlign: TextAlign.center,
                                 ),
                                 Text(
-                                  '25',
+                                  '$totalPedidos',
                                   style: TextStyle(
                                     fontFamily: 'Lato',
                                     fontWeight: FontWeight.w900,
@@ -248,7 +252,7 @@ class pginicialstage extends State<PgInicial> {
                                   textAlign: TextAlign.center,
                                 ),
                                 Text(
-                                  '12',
+                                  '$totalPedidosEmAberto',
                                   style: TextStyle(
                                     fontFamily: 'Lato',
                                     fontWeight: FontWeight.w900,
@@ -261,7 +265,7 @@ class pginicialstage extends State<PgInicial> {
                             Column(
                               children: [
                                 const Text(
-                                  'Pedidos\nentregues',
+                                  'Pedidos\nconfirmados',
                                   style: TextStyle(
                                     fontFamily: 'Lato',
                                     fontWeight: FontWeight.w500,
@@ -270,7 +274,7 @@ class pginicialstage extends State<PgInicial> {
                                   textAlign: TextAlign.center,
                                 ),
                                 Text(
-                                  '13',
+                                  '$totalPedidosConfirmados',
                                   style: TextStyle(
                                     fontFamily: 'Lato',
                                     fontWeight: FontWeight.w900,

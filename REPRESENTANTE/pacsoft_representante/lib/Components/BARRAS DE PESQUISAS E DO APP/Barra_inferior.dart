@@ -58,7 +58,7 @@ class baixo extends State<barra_inferior> {
         NavigationDestination(
           icon: Image.asset('assets/images/relatorio.png', width: 40),
           label: 'Relatórios',
-        ),
+        ), 
       ],
     );
   }

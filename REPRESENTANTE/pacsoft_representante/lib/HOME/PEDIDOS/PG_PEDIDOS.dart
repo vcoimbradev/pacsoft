@@ -1014,70 +1014,70 @@ class pginicialstate extends State<PgPedidos> {
   }
 
   Future<void> guardarPedido(Map<String, dynamic> pedido) async {
-    // 1. Gerar PDF com todas as informações
-    final pdf = pw.Document();
-    pdf.addPage(
-      pw.Page(
-        build: (pw.Context context) {
-          return pw.Column(
-            crossAxisAlignment: pw.CrossAxisAlignment.start,
-            children: [
-              pw.Text('Pedido em aberto', style: pw.TextStyle(fontSize: 24)),
-              pw.SizedBox(height: 16),
-              pw.Text('Razão Social: ${pedido['razaoSocial']}'),
-              pw.Text('CNPJ: ${pedido['cnpj']}'),
-              pw.Text('Cidade: ${pedido['cidade']}'),
-              pw.Text('Data: ${pedido['data']}'),
-              pw.Text('Forma de pagamento: ${pedido['pagamento'] ?? '-'}'),
-              pw.Text('Prazo de pagamento: ${pedido['prazo'] ?? '-'}'),
-              pw.SizedBox(height: 8),
-              pw.Text('Produtos:'),
-              ...((pedido['produtos'] as List).map((prod) => pw.Text(
-                  'Produto: ${prod['produto']}, Tamanho: ${prod['tamanho']}, '
-                  'KG: ${prod['quantidadeKg'] ?? '-'}, Fardo: ${prod['quantidadeFardo'] ?? '-'}, '
-                  'Milheiro: ${prod['quantidadeMilheiro'] ?? '-'}, Preço: R\$ ${prod['preco'] ?? '-'}'))),
-              pw.SizedBox(height: 8),
-              pw.Text('Peso médio total: ${pedido['pesoTotal'].toStringAsFixed(2)} KG'),
-              pw.Text('Valor médio total: R\$ ${pedido['valorTotal'].toStringAsFixed(2)}'),
-              pw.Text('Observações: ${pedido['observacoes']}'),
-            ],
-          );
-        },
-      ),
-    );
+  // 1. Gerar PDF com todas as informações (mantém igual)
+  final pdf = pw.Document();
+  pdf.addPage(
+    pw.Page(
+      build: (pw.Context context) {
+        return pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
+          children: [
+            pw.Text('Pedido em aberto', style: pw.TextStyle(fontSize: 24)),
+            pw.SizedBox(height: 16),
+            pw.Text('Razão Social: ${pedido['razaoSocial']}'),
+            pw.Text('CNPJ: ${pedido['cnpj']}'),
+            pw.Text('Cidade: ${pedido['cidade']}'),
+            pw.Text('Data: ${pedido['data']}'),
+            pw.Text('Forma de pagamento: ${pedido['pagamento'] ?? '-'}'),
+            pw.Text('Prazo de pagamento: ${pedido['prazo'] ?? '-'}'),
+            pw.SizedBox(height: 8),
+            pw.Text('Produtos:'),
+            ...((pedido['produtos'] as List).map((prod) => pw.Text(
+                'Produto: ${prod['produto']}, Tamanho: ${prod['tamanho']}, '
+                'KG: ${prod['quantidadeKg'] ?? '-'}, Fardo: ${prod['quantidadeFardo'] ?? '-'}, '
+                'Milheiro: ${prod['quantidadeMilheiro'] ?? '-'}, Preço: R\$ ${prod['preco'] ?? '-'}'))),
+            pw.SizedBox(height: 8),
+            pw.Text('Peso médio total: ${pedido['pesoTotal'].toStringAsFixed(2)} KG'),
+            pw.Text('Valor médio total: R\$ ${pedido['valorTotal'].toStringAsFixed(2)}'),
+            pw.Text('Observações: ${pedido['observacoes']}'),
+          ],
+        );
+      },
+    ),
+  );
 
-    // 2. Perguntar ao usuário se deseja salvar o PDF
-    final result = await showDialog<String>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Salvar Pedido'),
-        content: Text('Deseja salvar o PDF no dispositivo?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, 'salvar'),
-            child: Text('Salvar PDF'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, 'nao'),
-            child: Text('Não salvar PDF'),
-          ),
-        ],
-      ),
-    );
+  // 2. Perguntar ao usuário se deseja salvar o PDF
+  final result = await showDialog<String>(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: Text('Salvar Pedido'),
+      content: Text('Deseja salvar o PDF no dispositivo?'),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context, 'salvar'),
+          child: Text('Salvar PDF'),
+        ),
+        TextButton(
+          onPressed: () => Navigator.pop(context, 'nao'),
+          child: Text('Não salvar PDF'),
+        ),
+      ],
+    ),
+  );
 
-    if (result == 'salvar') {
-      await Printing.sharePdf(
-          bytes: await pdf.save(), filename: 'pedido_em_aberto.pdf');
-    }
-
-    // 3. Salvar o pedido localmente (Hive)
-    final box = await Hive.openBox('pedidos_em_aberto');
-    await box.add(pedido);
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Pedido salvo em aberto!')),
-    );
+  if (result == 'salvar') {
+    await Printing.sharePdf(
+        bytes: await pdf.save(), filename: 'pedido_em_aberto.pdf');
   }
+
+  // 3. Salvar o pedido localmente (Hive) na box correta!
+  final box = await Hive.openBox('pedidos_em_aberto');
+  await box.add(pedido);
+
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(content: Text('Pedido salvo em aberto!')),
+  );
+}
 }
 
 class botao_confirmar extends StatelessWidget {
