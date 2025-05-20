@@ -43,10 +43,10 @@ class Barra extends State<barra_superior>{
           Padding(padding: EdgeInsets.only(right: 30),
           child:  SizedBox(
             child: IconButton(onPressed:(){
-              Navigator.push(
+              /*Navigator.push(
                 context, 
                 MaterialPageRoute(builder: (context) => Pg_Perfil(), fullscreenDialog: false)
-              );
+              )*/
             }, icon: Icon(Icons.account_circle_outlined,size: 40,)),
           )
         ),

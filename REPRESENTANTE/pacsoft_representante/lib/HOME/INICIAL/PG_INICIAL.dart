@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:pacsoft_representante/BANCODEDADOS.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_pesquisa.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_superior.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_inferior.dart';
-import 'package:pacsoft_representante/HOME/PEDIDOS/PG_PEDIDOS.dart';
 import 'package:pacsoft_representante/HOME/PEDIDOS/PG_PEDIDOSEMABERTO.dart';
-import 'package:pacsoft_representante/HOME/RELATORIO/PG_COMISSAOMES.dart';
-import 'package:pacsoft_representante/HOME/RELATORIO/PG_TODOSOSPEDIDOSMES.dart'; // Exemplo
+import 'package:pacsoft_representante/HOME/RELATORIO/PG_TODOSOSPEDIDOSMES.dart';
+import 'package:pacsoft_representante/Provider(CLASSES)/classe_global.dart';
+import 'package:provider/provider.dart'; // Exemplo
 
 class PgInicial extends StatefulWidget {
-  const PgInicial({super.key});
+
+  const PgInicial({super.key,});
 
   @override
   State<StatefulWidget> createState() => pginicialstage();
@@ -22,19 +21,10 @@ class pginicialstage extends State<PgInicial> {
   String nomeUsuario = '';
 
   @override
-  void initState() {
-    super.initState();
-    var reps = Hive.box('representantes');
-    var rep = reps.get(DBHelper.Nomedorepresentante);
-    if (rep != null) {
-      setState(() {
-        nomeUsuario = rep['nome'];
-      });
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
+
+    final classeglobal = Provider.of<ClasseGlobal>(context);
+
     return Scaffold(
       appBar: barra_superior(height: 100),
       body: Column(
@@ -46,7 +36,7 @@ class pginicialstage extends State<PgInicial> {
                 children: [
                   const SizedBox(height: 10),
                   Text(
-                    "Bem Vindo, $nomeUsuario!",
+                    "Bem Vindo, ${classeglobal.nome}",
                     style: const TextStyle(
                       fontFamily: 'Lato',
                       fontWeight: FontWeight.w300,
@@ -140,42 +130,8 @@ class pginicialstage extends State<PgInicial> {
                         cursor: SystemMouseCursors.click,
                         child: GestureDetector(
                           onTap: () {
-                            /*Navigator.push(
-                               context,
-                             MaterialPageRoute(
-                                builder: (context) =>
-                                    PgPedidos(), // Substitua pela sua tela
-                              ),
-                            );*/
                           },
-                          /*child: Column(
-                            children: [
-                              Image.asset('assets/images/preco.png', width: 80),
-                              const Text(
-                                "Novo pedido",
-                                style: TextStyle(
-                                  fontFamily: 'Lato',
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      // ATALHO 4: COMISSÃO
-                      MouseRegion(
-                        cursor: SystemMouseCursors.click,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    PgComissaoMes(), // Substitua pela sua tela
-                              ),
-                            );
-                          },*/
+                         
                           child: Column(
                             children: [
                               Image.asset('assets/images/comissao.png',

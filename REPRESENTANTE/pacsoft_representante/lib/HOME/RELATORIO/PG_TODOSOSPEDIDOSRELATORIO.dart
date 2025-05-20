@@ -8,7 +8,7 @@ import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Ba
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_superior.dart';
 
 class PgTodosPedidosRelatorio extends StatefulWidget {
-  const PgTodosPedidosRelatorio({super.key});
+  const PgTodosPedidosRelatorio({super.key, });
 
   @override
   State<PgTodosPedidosRelatorio> createState() => _PgTodosPedidosRelatorioState();

@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:pacsoft_representante/Components/BARRAS%20DE%20PESQUISAS%20E%20DO%20APP/Barra_inferior.dart';
 import 'package:pacsoft_representante/Components/BARRAS%20DE%20PESQUISAS%20E%20DO%20APP/Barra_pesquisa.dart';
 import 'package:pacsoft_representante/Components/BARRAS%20DE%20PESQUISAS%20E%20DO%20APP/Barra_superior.dart';
-import 'package:pacsoft_representante/HOME/PEDIDOS/PG_PEDIDOS.dart';
 import 'package:pacsoft_representante/HOME/PEDIDOS/PG_PEDIDOSEMABERTO.dart';
 import 'package:pacsoft_representante/HOME/PEDIDOS/PG_TODOSOSPEDIDOS.dart';
 
-class PgPedidosLista extends StatelessWidget {
+class PgPedidosLista extends StatefulWidget {
   const PgPedidosLista({super.key});
 
+  @override
+  State<StatefulWidget> createState() => _PgPedidosLista();
+}
+
+class _PgPedidosLista extends State<PgPedidosLista> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +73,7 @@ class PgPedidosLista extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: barra_inferior()
+      bottomNavigationBar: barra_inferior(), // Passando o nome do usuário para a barra inferior
       );
   }
 }

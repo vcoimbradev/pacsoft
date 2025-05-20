@@ -9,7 +9,7 @@ import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Ba
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_superior.dart';
 
 class PgRelatorioPedidosMes extends StatefulWidget {
-  const PgRelatorioPedidosMes({super.key});
+  const PgRelatorioPedidosMes({super.key, });
 
   @override
   State<PgRelatorioPedidosMes> createState() => _PgRelatorioPedidosMesState();
@@ -260,7 +260,7 @@ class _PgRelatorioPedidosMesState extends State<PgRelatorioPedidosMes> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: barra_superior(height: 100),
+      appBar: barra_superior(height: 100, ),
       body: Column(
         children: [
           const Barra_pesquisa(),

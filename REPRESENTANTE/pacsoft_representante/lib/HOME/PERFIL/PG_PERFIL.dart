@@ -1,12 +1,16 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:pacsoft_representante/APIs/servicos_api.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_inferior.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_pesquisa.dart';
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_superior.dart';
 import 'package:pacsoft_representante/BANCODEDADOS.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Pg_Perfil extends StatefulWidget {
-  const Pg_Perfil({super.key});
+  const Pg_Perfil({super.key,});
+  
 
   @override
   State<Pg_Perfil> createState() => _Pg_PerfilState();
@@ -15,6 +19,7 @@ class Pg_Perfil extends StatefulWidget {
 class _Pg_PerfilState extends State<Pg_Perfil> {
   Map<String, dynamic>? _dadosRep;
   bool _editando = false;
+  bool _isLoading = true;
 
   final _telefoneController = TextEditingController();
   final _agenciaController = TextEditingController();
@@ -28,21 +33,38 @@ class _Pg_PerfilState extends State<Pg_Perfil> {
   }
 
   Future<void> _carregarDados() async {
-    var reps = await Hive.openBox('representantes');
-    final rep = reps.get(DBHelper.Nomedorepresentante);
-    if (rep != null) {
-      setState(() {
-        _dadosRep = Map<String, dynamic>.from(rep);
-        _telefoneController.text = rep['telefone'] ?? '';
-        _agenciaController.text = rep['agencia'] ?? '';
-        _contaController.text = rep['conta'] ?? '';
-        _pixController.text = rep['pix'] ?? '';
-      });
+    try {
+      final response = await http.get(
+        Uri.parse('http://127.0.0.1:8000/representante/${widget.cpfCnpj}'),
+      );
+
+      if (response.statusCode == 200) {
+        final dados = json.decode(response.body);
+        setState(() {
+          _dadosRep = dados;
+          _preencherControllers();
+          _isLoading = false;
+        });
+      } else {
+        throw Exception('Falha ao carregar dados do representante');
+      }
+    } catch (e) {
+      setState(() => _isLoading = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao carregar dados: ${e.toString()}')),
+      );
     }
   }
 
+  void _preencherControllers() {
+    _telefoneController.text = _dadosRep?['telefone'] ?? '';
+    _agenciaController.text = _dadosRep?['agencia'] ?? '';
+    _contaController.text = _dadosRep?['conta'] ?? '';
+    _pixController.text = _dadosRep?['pix'] ?? '';
+  }
+
   Future<void> _salvarEdicao() async {
-    var reps = await Hive.openBox('representantes');
+    try {
     final novo = {
       ..._dadosRep!,
       'telefone': _telefoneController.text,
@@ -50,22 +72,44 @@ class _Pg_PerfilState extends State<Pg_Perfil> {
       'conta': _contaController.text,
       'pix': _pixController.text,
     };
-    await reps.put(_dadosRep!['cpf'], novo);
-    setState(() {
-      _editando = false;
-      _dadosRep = novo;
-    });
+      final response = await http.put(
+        Uri.parse('http://127.0.0.1:8000/representante/${}'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(novo),
+      );
+
+      if (response.statusCode == 200) {
+        setState(() {
+          _editando = false;
+          _dadosRep = novo;
+        });
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Dados atualizados com sucesso!')),
-    );
+    );}
+      else {
+        throw Exception('Falha ao atualizar dados');
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao atualizar dados: ${e.toString()}')),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_dadosRep == null) {
+    if (_isLoading) {
       return Scaffold(
         appBar: barra_superior(height: 100),
         body: Center(child: CircularProgressIndicator()),
+        bottomNavigationBar: barra_inferior(),
+      );
+    }
+
+    if (_dadosRep == null) {
+      return Scaffold(
+        appBar: barra_superior(height: 100),
+        body: Center(child: Text('Erro ao carregar dados')),
         bottomNavigationBar: barra_inferior(),
       );
     }
@@ -237,4 +281,4 @@ class _Pg_PerfilState extends State<Pg_Perfil> {
       ],
     );
   }
-}
+}*/

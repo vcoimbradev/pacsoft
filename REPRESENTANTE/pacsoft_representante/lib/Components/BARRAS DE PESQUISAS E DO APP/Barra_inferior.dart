@@ -5,7 +5,7 @@ import 'package:pacsoft_representante/HOME/PEDIDOS/PgPedidoslista.dart';
 import 'package:pacsoft_representante/HOME/RELATORIO/PgRelatorioLista.dart';
 
 class barra_inferior extends StatefulWidget implements PreferredSizeWidget {
-  const barra_inferior({super.key});
+  const barra_inferior({super.key,});
 
   @override
   State<StatefulWidget> createState() {
@@ -20,11 +20,11 @@ class baixo extends State<barra_inferior> {
   int index_selecionado = 0;
 
   // Lista de telas correspondentes a cada item da barra de navegação
-  final List<Widget> screens = [
-    const PgInicial(),
-    const PgClientesLista(), // Substitua pela sua tela de clientes
-    const PgPedidosLista(),  // Substitua pela sua tela de pedidos
-    const PgRelatorioLista(), // Substitua pela sua tela de relatórios
+  List<Widget> get screens => [
+    PgInicial(),
+    PgClientesLista(), // Substitua pela sua tela de clientes
+    PgPedidosLista(),  // Substitua pela sua tela de pedidos
+    PgRelatorioLista(), // Substitua pela sua tela de relatórios
   ];
 
   @override

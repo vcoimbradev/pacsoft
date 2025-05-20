@@ -9,7 +9,7 @@ import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Ba
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_superior.dart';
 
 class PgComissaoMes extends StatefulWidget {
-  const PgComissaoMes({super.key});
+  const PgComissaoMes({super.key, });
 
   @override
   State<PgComissaoMes> createState() => _PgComissaoMesState();
@@ -401,7 +401,8 @@ class _PgComissaoMesState extends State<PgComissaoMes> {
           ),
         ],
       ),
-      bottomNavigationBar: barra_inferior(),
+      bottomNavigationBar: barra_inferior( // Adicione o nome do usuário aqui
+      ),
     );
   }
 }

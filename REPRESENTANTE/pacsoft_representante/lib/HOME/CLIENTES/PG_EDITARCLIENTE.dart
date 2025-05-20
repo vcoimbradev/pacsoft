@@ -7,7 +7,7 @@ import 'package:hive/hive.dart';
 class PgEditarCliente extends StatefulWidget {
   final Map cliente;
 
-  const PgEditarCliente({super.key, required this.cliente});
+  const PgEditarCliente({super.key, required this.cliente,});
   @override
   State<StatefulWidget> createState() => _PgEditarClienteState();
 }

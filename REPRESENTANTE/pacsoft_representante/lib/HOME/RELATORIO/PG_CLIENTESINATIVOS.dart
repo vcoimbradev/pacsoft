@@ -8,7 +8,9 @@ import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Ba
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_superior.dart';
 
 class PgClientesInativos extends StatefulWidget {
-  const PgClientesInativos({super.key});
+  const PgClientesInativos({
+    super.key,
+  });
 
   @override
   State<PgClientesInativos> createState() => _PgClientesInativosState();
@@ -24,7 +26,7 @@ class _PgClientesInativosState extends State<PgClientesInativos> {
       'cnpj': '00.000.000/0001-00',
     },
     {
-      'razaoSocial': 'Albertino Pack',  
+      'razaoSocial': 'Albertino Pack',
       'cidade': 'Cruz das Almas',
       'ultimoPedido': '29/03/2025',
       'cnpj': '11.111.111/0001-11',
@@ -57,7 +59,8 @@ class _PgClientesInativosState extends State<PgClientesInativos> {
   // Método para parsear data no formato dd/MM/yyyy
   DateTime _parseData(String dateStr) {
     final parts = dateStr.split('/');
-    return DateTime(int.parse(parts[2]), int.parse(parts[1]), int.parse(parts[0]));
+    return DateTime(
+        int.parse(parts[2]), int.parse(parts[1]), int.parse(parts[0]));
   }
 
   // Método para formatar data no formato dd/MM/yyyy
@@ -66,23 +69,27 @@ class _PgClientesInativosState extends State<PgClientesInativos> {
   }
 
   // Processa a lista de clientes adicionando dias sem pedido
-  List<Map<String, dynamic>> _processarClientes(List<Map<String, dynamic>> clientes) {
-    return clientes.map((cliente) {
-      final ultimoPedido = _parseData(cliente['ultimoPedido']);
-      final diferenca = _dataAtual.difference(ultimoPedido).inDays;
-      
-      return {
-        ...cliente,
-        'diasSemPedido': diferenca,
-        'status': diferenca > 30 ? 'Inativo' : 'Ativo',
-        'statusColor': diferenca > 30 ? Colors.orange : Colors.green,
-      };
-    }).where((cliente) => cliente['diasSemPedido'] > 30).toList();
+  List<Map<String, dynamic>> _processarClientes(
+      List<Map<String, dynamic>> clientes) {
+    return clientes
+        .map((cliente) {
+          final ultimoPedido = _parseData(cliente['ultimoPedido']);
+          final diferenca = _dataAtual.difference(ultimoPedido).inDays;
+
+          return {
+            ...cliente,
+            'diasSemPedido': diferenca,
+            'status': diferenca > 30 ? 'Inativo' : 'Ativo',
+            'statusColor': diferenca > 30 ? Colors.orange : Colors.green,
+          };
+        })
+        .where((cliente) => cliente['diasSemPedido'] > 30)
+        .toList();
   }
 
   void _filtrarClientes() {
     final query = _searchController.text.toLowerCase();
-    
+
     setState(() {
       if (query.isEmpty) {
         _clientesFiltrados = _processarClientes(_todosClientes);
@@ -91,12 +98,13 @@ class _PgClientesInativosState extends State<PgClientesInativos> {
 
       _clientesFiltrados = _processarClientes(_todosClientes.where((cliente) {
         final nome = cliente['razaoSocial'].toString().toLowerCase();
-        final cnpj = cliente['cnpj'].toString().replaceAll(RegExp(r'[^0-9]'), '');
+        final cnpj =
+            cliente['cnpj'].toString().replaceAll(RegExp(r'[^0-9]'), '');
         final cidade = cliente['cidade'].toString().toLowerCase();
-        
-        return nome.contains(query) || 
-               cnpj.contains(query.replaceAll(RegExp(r'[^0-9]'), '')) ||
-               cidade.contains(query);
+
+        return nome.contains(query) ||
+            cnpj.contains(query.replaceAll(RegExp(r'[^0-9]'), '')) ||
+            cidade.contains(query);
       }).toList());
     });
   }
@@ -115,50 +123,56 @@ class _PgClientesInativosState extends State<PgClientesInativos> {
               pw.Row(
                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                 children: [
-                  pw.Text('Clientes sem pedidos mais que 30 dias\n${_formatarData(_dataAtual)}',
-                      style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold)),
-                  if (logo != null)
-                    pw.Image(logo, width: 100, height: 50),
+                  pw.Text(
+                      'Clientes sem pedidos mais que 30 dias\n${_formatarData(_dataAtual)}',
+                      style: pw.TextStyle(
+                          fontSize: 16, fontWeight: pw.FontWeight.bold)),
+                  if (logo != null) pw.Image(logo, width: 100, height: 50),
                 ],
               ),
               pw.SizedBox(height: 20),
-              
               if (_searchController.text.isNotEmpty)
                 pw.Padding(
                   padding: const pw.EdgeInsets.only(bottom: 10),
                   child: pw.Text('Filtro aplicado: "${_searchController.text}"',
                       style: pw.TextStyle(fontStyle: pw.FontStyle.italic)),
                 ),
-              
               pw.Text('Data de referência: ${_formatarData(_dataAtual)}',
                   style: pw.TextStyle(fontStyle: pw.FontStyle.italic)),
               pw.SizedBox(height: 10),
-              
               pw.TableHelper.fromTextArray(
                 context: context,
-                headerStyle: pw.TextStyle(fontWeight: pw.FontWeight.bold, color: PdfColors.white),
+                headerStyle: pw.TextStyle(
+                    fontWeight: pw.FontWeight.bold, color: PdfColors.white),
                 headerDecoration: pw.BoxDecoration(color: PdfColors.blue800),
                 data: [
-                  ['Razão Social', 'Cidade', 'Último Pedido', 'Dias Sem Pedido'],
+                  [
+                    'Razão Social',
+                    'Cidade',
+                    'Último Pedido',
+                    'Dias Sem Pedido'
+                  ],
                   ..._clientesFiltrados.map((cliente) => [
-                    cliente['razaoSocial'],
-                    cliente['cidade'],
-                    cliente['ultimoPedido'],
-                    pw.Container(
-                      padding: const pw.EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                      decoration: pw.BoxDecoration(
-                        color: cliente['diasSemPedido'] > 60 ? PdfColors.red : PdfColors.orange,
-                        borderRadius: pw.BorderRadius.circular(12),
-                      ),
-                      child: pw.Text(
-                        cliente['diasSemPedido'].toString(),
-                        style: pw.TextStyle(color: PdfColors.white),
-                      ),
-                    ),
-                  ]),
+                        cliente['razaoSocial'],
+                        cliente['cidade'],
+                        cliente['ultimoPedido'],
+                        pw.Container(
+                          padding: const pw.EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 4),
+                          decoration: pw.BoxDecoration(
+                            color: cliente['diasSemPedido'] > 60
+                                ? PdfColors.red
+                                : PdfColors.orange,
+                            borderRadius: pw.BorderRadius.circular(12),
+                          ),
+                          child: pw.Text(
+                            cliente['diasSemPedido'].toString(),
+                            style: pw.TextStyle(color: PdfColors.white),
+                          ),
+                        ),
+                      ]),
                 ],
               ),
-              
               pw.SizedBox(height: 20),
               pw.Row(
                 mainAxisAlignment: pw.MainAxisAlignment.end,
@@ -215,7 +229,6 @@ class _PgClientesInativosState extends State<PgClientesInativos> {
                   style: TextStyle(fontStyle: FontStyle.italic),
                 ),
                 SizedBox(height: 10),
-                
                 TextField(
                   controller: _searchController,
                   decoration: InputDecoration(
@@ -224,7 +237,6 @@ class _PgClientesInativosState extends State<PgClientesInativos> {
                     suffixIcon: Icon(Icons.search),
                   ),
                 ),
-                
                 if (_searchController.text.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.only(top: 8),
@@ -236,7 +248,6 @@ class _PgClientesInativosState extends State<PgClientesInativos> {
               ],
             ),
           ),
-          
           Expanded(
             child: _clientesFiltrados.isEmpty
                 ? Center(
@@ -258,7 +269,8 @@ class _PgClientesInativosState extends State<PgClientesInativos> {
                       children: [
                         // Cabeçalho da tabela
                         Container(
-                          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 16),
                           decoration: BoxDecoration(
                             color: Colors.grey[300],
                             borderRadius: BorderRadius.circular(10),
@@ -267,70 +279,77 @@ class _PgClientesInativosState extends State<PgClientesInativos> {
                             children: [
                               Expanded(
                                 flex: 3,
-                                child: Text('Razão Social', 
-                                    style: TextStyle(fontWeight: FontWeight.w800)),
+                                child: Text('Razão Social',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w800)),
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text('Cidade', 
-                                    style: TextStyle(fontWeight: FontWeight.w800)),
+                                child: Text('Cidade',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w800)),
                               ),
                               Expanded(
                                 flex: 2,
-                                child: Text('Dias Sem Pedido', 
-                                    style: TextStyle(fontWeight: FontWeight.w800)),
+                                child: Text('Dias Sem Pedido',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w800)),
                               ),
                             ],
                           ),
                         ),
-                        
+
                         // Lista de clientes
                         ..._clientesFiltrados.map((cliente) => Card(
-                          margin: EdgeInsets.only(top: 8),
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 3,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        cliente['razaoSocial'],
-                                        style: TextStyle(fontWeight: FontWeight.bold),
+                              margin: EdgeInsets.only(top: 8),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 3,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            cliente['razaoSocial'],
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(
+                                            'Último: ${cliente['ultimoPedido']}',
+                                            style: TextStyle(fontSize: 12),
+                                          ),
+                                        ],
                                       ),
-                                      Text(
-                                        'Último: ${cliente['ultimoPedido']}',
-                                        style: TextStyle(fontSize: 12),
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Text(cliente['cidade']),
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 12, vertical: 6),
+                                        decoration: BoxDecoration(
+                                          color: cliente['statusColor'],
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: Text(
+                                          '${cliente['diasSemPedido']} dias',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(color: Colors.white),
+                                        ),
                                       ),
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Text(cliente['cidade']),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                    decoration: BoxDecoration(
-                                      color: cliente['statusColor'],
-                                      borderRadius: BorderRadius.circular(20),
                                     ),
-                                    child: Text(
-                                      '${cliente['diasSemPedido']} dias',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ),
-                        )),
-                        
+                              ),
+                            )),
+
                         // Botão para gerar PDF
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 20),
@@ -341,7 +360,8 @@ class _PgClientesInativosState extends State<PgClientesInativos> {
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white,
                               backgroundColor: Colors.red,
-                              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 24, vertical: 12),
                             ),
                           ),
                         ),
@@ -351,7 +371,8 @@ class _PgClientesInativosState extends State<PgClientesInativos> {
           ),
         ],
       ),
-      bottomNavigationBar: barra_inferior(),
+      bottomNavigationBar: barra_inferior(// Adicione o nome do usuário aqui
+          ),
     );
   }
 

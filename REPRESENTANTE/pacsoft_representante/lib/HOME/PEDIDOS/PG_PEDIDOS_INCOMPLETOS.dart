@@ -6,8 +6,6 @@ import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Ba
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_superior.dart';
 import 'package:pacsoft_representante/Components/OBSERVA%C3%87%C3%83O/Observacoes.dart';
 import 'package:pacsoft_representante/Components/PESOS%20E%20QUANTIDADES/Peso_medio.dart';
-import 'package:pacsoft_representante/Components/PRE%C3%87OS%20E%20VALOR%20MEDIO/Preco.dart'
-    as preco_component;
 import 'package:pacsoft_representante/Components/PESOS%20E%20QUANTIDADES/Tamanho_Pacote.dart';
 import 'package:pacsoft_representante/Components/PRE%C3%87OS%20E%20VALOR%20MEDIO/valor_medio.dart';
 import 'package:pacsoft_representante/HOME/PEDIDOS/PgPedidoslista.dart';
@@ -22,8 +20,7 @@ class PgPedidos_Incompletos extends StatefulWidget {
   final String cidade;
   final String idCliente;
   final String idRepresentante;
-  final Map<String, dynamic>? pedidoAnterior; // Novo parâmetro
-
+  final Map<String, dynamic>? pedidoAnterior;
   final dynamic hiveKey; // Define the hiveKey field
 
   const PgPedidos_Incompletos({
@@ -351,9 +348,15 @@ class pgpedidosincompletos extends State<PgPedidos_Incompletos> {
   void limparCampos() {
     setState(() {
       pedidos.clear();
-      kgControllers.forEach((c) => c.clear());
-      fardoControllers.forEach((c) => c.clear());
-      milheiroControllers.forEach((c) => c.clear());
+      for (var c in kgControllers) {
+        c.clear();
+      }
+      for (var c in fardoControllers) {
+        c.clear();
+      }
+      for (var c in milheiroControllers) {
+        c.clear();
+      }
       // Limpe outros campos/controladores que você tiver, como prazoController, etc.
     });
   }
@@ -1108,8 +1111,7 @@ class botao_guardar extends StatelessWidget {
 
 class botao_cancelar extends StatelessWidget {
   final VoidCallback? onPressed;
-
-  const botao_cancelar({super.key, this.onPressed});
+  const botao_cancelar({super.key, this.onPressed,});
 
   @override
   Widget build(BuildContext context) {

@@ -5,7 +5,6 @@ import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Ba
 
 class PgClientesInativosFigma extends StatefulWidget {
   const PgClientesInativosFigma({super.key});
-
   @override
   State<PgClientesInativosFigma> createState() => _PgClientesInativosFigmaState();
 }

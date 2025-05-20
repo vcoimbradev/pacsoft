@@ -7,6 +7,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class PgCadastroCliente extends StatefulWidget {
+  const PgCadastroCliente({super.key,});
+
   @override
   State<StatefulWidget> createState() => _PgCadastroClienteState();
 }

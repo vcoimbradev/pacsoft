@@ -4,12 +4,17 @@ import 'package:pacsoft_representante/Components/BARRAS%20DE%20PESQUISAS%20E%20D
 import 'package:pacsoft_representante/Components/BARRAS%20DE%20PESQUISAS%20E%20DO%20APP/Barra_superior.dart';
 import 'package:pacsoft_representante/HOME/CLIENTES/PG_CADASTROCLIENTE.dart';
 import 'package:pacsoft_representante/HOME/CLIENTES/PG_CLIENTESINATIVOS30DIAS.dart';
-import 'package:pacsoft_representante/HOME/CLIENTES/PG_EDITARCLIENTE.dart';
 import 'package:pacsoft_representante/HOME/CLIENTES/PG_TODOSOSCLIENTES.dart';
 
-class PgClientesLista extends StatelessWidget {
+class PgClientesLista extends StatefulWidget {
+
   const PgClientesLista({super.key});
 
+  @override
+  State<PgClientesLista> createState() => _PgClientesListaState();
+}
+
+class _PgClientesListaState extends State<PgClientesLista> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

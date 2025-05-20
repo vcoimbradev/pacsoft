@@ -86,7 +86,7 @@ class _PgPedidosAbertosState extends State<PgPedidosAbertos> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: barra_superior(height: 100),
+      appBar: barra_superior(height: 100,),
       body: Column(
         children: [
           Barra_pesquisa(),
@@ -184,6 +184,7 @@ class _PgPedidosAbertosState extends State<PgPedidosAbertos> {
                                     idRepresentante: pedido['idRepresentante'],
                                     pedidoAnterior: pedido,
                                     hiveKey: pedido['hiveKey'], // Passe a chave aqui
+
                                   ),
                                 ),
                               );

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pacsoft_representante/HOME/INICIAL/PG_INICIAL.dart';
-import 'package:pacsoft_representante/BANCODEDADOS.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:pacsoft_representante/APIs/servicos_api.dart';
+import 'package:pacsoft_representante/Provider(CLASSES)/classe_global.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -15,41 +19,32 @@ class _LoginState extends State<Login> {
   bool _isLoading = false;
   bool _obscurePassword = true;
 
-  Future<void> _login() async {
-    if (_cnpjCpfController.text.isEmpty || _senhaController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Preencha todos os campos')),
-      );
-      return;
-    }
-
-    setState(() => _isLoading = true);
-
-    try {
-      final autenticado = await DBHelper.autenticar(
-        _cnpjCpfController.text,
-        _senhaController.text,
-      );
-
-      if (autenticado) {
-        DBHelper.Nomedorepresentante = _cnpjCpfController.text;
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => PgInicial()),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Usuário ou senha inválidos')),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Erro: ${e.toString()}')),
-      );
-    } finally {
-      setState(() => _isLoading = false);
-    }
+Future<void> _login() async {
+  if (_cnpjCpfController.text.isEmpty || _senhaController.text.isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Preencha todos os campos')),
+    );
+    return;
   }
+
+  setState(() => _isLoading = true);
+
+  try {
+    final userStore = Provider.of<ClasseGlobal>(context, listen: false);
+    await userStore.login(_cnpjCpfController.text, _senhaController.text);
+    
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => PgInicial()),
+    );
+  } catch (e) {
+  ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Credenciais inválidas')),
+    );
+  } finally {
+    setState(() => _isLoading = false);
+  }
+}
 
   @override
   Widget build(BuildContext context) {

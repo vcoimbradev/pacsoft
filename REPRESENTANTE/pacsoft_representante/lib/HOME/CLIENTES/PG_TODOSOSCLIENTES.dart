@@ -6,6 +6,7 @@ import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Ba
 import 'package:pacsoft_representante/HOME/CLIENTES/PG_EDITARCLIENTE.dart';
 
 class PgTodosClientes extends StatefulWidget {
+
   const PgTodosClientes({super.key});
 
   @override
@@ -34,7 +35,7 @@ class _PgTodosClientesState extends State<PgTodosClientes> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: barra_superior(height: 100),
+      appBar: barra_superior(height: 100,),
       body: Column(
         children: [
           Barra_pesquisa(),
@@ -126,7 +127,9 @@ class _PgTodosClientesState extends State<PgTodosClientes> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => PgEditarCliente(cliente: {...cliente, 'key': key}),
+                                      builder: (context) => PgEditarCliente(
+                                        cliente: {...cliente, 'key': key},
+                                      ),
                                     ),
                                   ).then((_) => carregarClientes());
                                 },

@@ -7,8 +7,15 @@ import 'package:pacsoft_representante/HOME/RELATORIO/PG_COMISSAOMES.dart';
 import 'package:pacsoft_representante/HOME/RELATORIO/PG_TODOSOSPEDIDOSMES.dart';
 import 'package:pacsoft_representante/HOME/RELATORIO/PG_TODOSOSPEDIDOSRELATORIO.dart';
 
-class PgRelatorioLista extends StatelessWidget {
-  const PgRelatorioLista({super.key});
+class PgRelatorioLista extends StatefulWidget {
+  const PgRelatorioLista({super.key, });
+
+  @override
+    State<PgRelatorioLista> createState() => _PgRelatorioListaState();
+
+}
+
+class _PgRelatorioListaState extends State<PgRelatorioLista> {
 
   @override
   Widget build(BuildContext context) {

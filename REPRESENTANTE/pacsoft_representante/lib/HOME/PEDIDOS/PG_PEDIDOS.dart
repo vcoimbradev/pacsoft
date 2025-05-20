@@ -6,8 +6,6 @@ import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Ba
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_superior.dart';
 import 'package:pacsoft_representante/Components/OBSERVA%C3%87%C3%83O/Observacoes.dart';
 import 'package:pacsoft_representante/Components/PESOS%20E%20QUANTIDADES/Peso_medio.dart';
-import 'package:pacsoft_representante/Components/PRE%C3%87OS%20E%20VALOR%20MEDIO/Preco.dart'
-    as preco_component;
 import 'package:pacsoft_representante/Components/PESOS%20E%20QUANTIDADES/Tamanho_Pacote.dart';
 import 'package:pacsoft_representante/Components/PRE%C3%87OS%20E%20VALOR%20MEDIO/valor_medio.dart';
 import 'package:pacsoft_representante/HOME/PEDIDOS/PgPedidoslista.dart';
@@ -16,13 +14,14 @@ import 'package:printing/printing.dart';
 import 'dart:html' as html;
 
 //import 'package:pacsoft_representante/Components/BOT%C3%95ES/Botao_cancelar.dart';
+
+
 class PgPedidos extends StatefulWidget {
   final String razao_social;
   final String cnpj;
   final String cidade;
   final String idCliente;
   final String idRepresentante;
-
   const PgPedidos({
     super.key,
     required this.razao_social,
@@ -35,11 +34,9 @@ class PgPedidos extends StatefulWidget {
   String? get tamanhoselecionado => null;
 
   set tamanhoselecionadoValue(String? tamanhoselecionadoValue) {}
-
   @override
-  State<StatefulWidget> createState() {
-    return pginicialstate();
-  }
+
+  State<StatefulWidget> createState() => pginicialstate();
 }
 
 class pginicialstate extends State<PgPedidos> {
@@ -298,9 +295,15 @@ class pginicialstate extends State<PgPedidos> {
   void limparCampos() {
     setState(() {
       pedidos.clear();
-      kgControllers.forEach((c) => c.clear());
-      fardoControllers.forEach((c) => c.clear());
-      milheiroControllers.forEach((c) => c.clear());
+      for (var c in kgControllers) {
+        c.clear();
+      }
+      for (var c in fardoControllers) {
+        c.clear();
+      }
+      for (var c in milheiroControllers) {
+        c.clear();
+      }
       // Limpe outros campos/controladores que você tiver, como prazoController, etc.
     });
   }
@@ -1149,8 +1152,9 @@ class botao_cancelar extends StatelessWidget {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  PgPedidosLista()), // Replace with an existing page
+              builder: (context) =>  //TODO: Substitua por NOME DE USUARIO
+                  PgPedidosLista(), // Replace with an existing page
+          ),
           (route) => false, // Remove todas as telas anteriores
         );
       },

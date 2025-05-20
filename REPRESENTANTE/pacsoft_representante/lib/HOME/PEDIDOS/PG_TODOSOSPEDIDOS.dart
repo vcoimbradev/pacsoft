@@ -5,7 +5,7 @@ import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Ba
 import 'package:pacsoft_representante/Components/BARRAS DE PESQUISAS E DO APP/Barra_superior.dart';
 
 class PgTodosPedidos extends StatefulWidget {
-  const PgTodosPedidos({super.key});
+  const PgTodosPedidos({super.key,});
 
   @override
   State<PgTodosPedidos> createState() => _PgTodosPedidosState();
