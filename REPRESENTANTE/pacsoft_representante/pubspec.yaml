@@ -2,7 +2,7 @@ name: pacsoft_representante
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -28,12 +28,20 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  shelf: ^1.4.0
+  shelf_router: ^1.1.4
+  mysql1: ^0.20.0
   flutter:
     sdk: flutter
+  intl: ^0.18.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  pdf: ^3.10.0
+  printing: ^5.11.0
+  path_provider: ^2.1.1
+  flutter_dotenv: ^5.2.1
 
 dev_dependencies:
   flutter_test:
@@ -51,10 +59,31 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
+  assets:
+    - assets/fonts/
+    - assets/images/logo.png
+    - assets/images/cliente.png
+    - assets/images/relatorio.png
+    - assets/images/inicio.png
+    - assets/images/pedidos.png
+    - assets/images/comissao.png
+    - assets/images/pendente.png
+    - assets/images/preco.png
+    - assets/images/tempo.png
+    - assets/images/guardar.png
+    - assets/images/confirmar.png
+    - assets/images/cancelar.png
+    - assets/images/disquete.png
+    - assets/images/lixeira.png
+  fonts:
+    - family: Etno
+      fonts:
+        - asset: assets/fonts/Etno-Regular.ttf
+        - asset: assets/fonts/Lato-Regular.ttf
+
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
